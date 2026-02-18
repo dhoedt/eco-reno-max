@@ -26,13 +26,26 @@
   padding: var(--space-sm) var(--space-md);
   background-color: var(--color-primary);
   color: var(--color-bg);
-  border: 2px solid var(--color-bg);
+  border: 1px solid var(--color-bg);
 }
 
 /* Skills */
 .skills-grid {
   display: grid;
+  grid-template-columns: 1fr;
   grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 768px) {
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .skills-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 
 .skill-card {
@@ -53,14 +66,14 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(0,0,0,0.3)), var(--card-bg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3)), var(--card-bg);
   background-size: cover;
   background-position: center;
   opacity: 0.8;
   z-index: 0;
 }
 
-.skill-card > * {
+.skill-card>* {
   position: relative;
   z-index: 1;
 }
@@ -70,12 +83,38 @@
 }
 
 /* Per-card background images */
-.skill-card--isolation   { --card-bg: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop'); }
-.skill-card--peinture    { --card-bg: url('https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=400&h=300&fit=crop'); }
-.skill-card--argile      { --card-bg: url('https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&h=300&fit=crop'); }
-.skill-card--carrelage   { --card-bg: url('https://images.unsplash.com/photo-1564540574859-0dfb63985953?w=400&h=300&fit=crop'); }
-.skill-card--cloison     { --card-bg: url('https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=400&h=300&fit=crop'); }
-.skill-card--bois        { --card-bg: url('https://images.unsplash.com/photo-1542621334-a254cf47733d?w=400&h=300&fit=crop'); }
-.skill-card--revetements { --card-bg: url('https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=400&h=300&fit=crop'); }
-.skill-card--ventilation { --card-bg: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop'); }
-.skill-card--sanitaire   { --card-bg: url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&h=300&fit=crop'); }
+.skill-card--isolation {
+  --card-bg: url('https://images.unsplash.com/photo-1670511146782-8f52c5a7bd08?w=400&h=300&fit=crop');
+}
+
+.skill-card--peinture {
+  --card-bg: url('https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=400&h=300&fit=crop');
+}
+
+.skill-card--argile {
+  --card-bg: url('https://images.unsplash.com/photo-1711967151478-65f508092c8a?w=400&h=300&fit=crop');
+}
+
+.skill-card--carrelage {
+  --card-bg: url('https://images.unsplash.com/photo-1723902499543-08aff0f346bf?w=400&h=300&fit=crop');
+}
+
+.skill-card--cloison {
+  --card-bg: url('https://images.unsplash.com/photo-1768839725085-829e6ac7ac26?w=400&h=300&fit=crop');
+}
+
+.skill-card--bois {
+  --card-bg: url('https://images.unsplash.com/photo-1659930087003-2d64e33181f7?w=400&h=300&fit=crop');
+}
+
+.skill-card--revetements {
+  --card-bg: url('https://images.unsplash.com/photo-1769690176928-0b63f20ea22b?w=400&h=300&fit=crop');
+}
+
+.skill-card--ventilation {
+  --card-bg: url('https://images.unsplash.com/photo-1574334292321-4844f63aefef?w=400&h=300&fit=crop');
+}
+
+.skill-card--sanitaire {
+  --card-bg: url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&h=300&fit=crop');
+}
