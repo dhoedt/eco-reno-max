@@ -3,7 +3,8 @@
   --color-bg: #f9f9f7;
   --color-text: #1a1a1a;
   --color-muted: #555;
-  --font-base: system-ui, sans-serif;
+  --font-base: 'Urbanist', system-ui, sans-serif;
+  --font-heading: 'Fraunces', Georgia, serif;
   --space-sm: 0.5rem;
   --space-md: 1.5rem;
   --space-lg: 3rem;
@@ -22,6 +23,13 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  line-height: 1.2;
 }
 
 .wrapper {
