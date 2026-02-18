@@ -33,9 +33,21 @@
       <div class="wrapper">
         <h2>Réalisations</h2>
         <article class="project">
-          <img
-            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop"
-            alt="Rénovation énergétique d'une maison individuelle">
+          <div class="comparison">
+            <img class="comparison-before"
+              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop"
+              alt="Avant rénovation énergétique">
+            <img class="comparison-after"
+              src="https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=800&h=600&fit=crop"
+              alt="Après rénovation énergétique">
+            <div class="comparison-handle">
+              <div class="comparison-handle-btn">&#8592; &#8594;</div>
+            </div>
+            <span class="comparison-label comparison-label--before">Avant</span>
+            <span class="comparison-label comparison-label--after">Après</span>
+            <input class="comparison-range" type="range" min="0" max="100" value="50"
+              aria-label="Comparer avant et après">
+          </div>
           <div class="project-body">
             <h3>Rénovation énergétique</h3>
             <p>Isolation des combles et des murs par l'extérieur avec des matériaux biosourcés. Remplacement des menuiseries et installation d'une VMC double flux.</p>
@@ -51,6 +63,13 @@
     </div>
   </footer>
 
-
+  <script>
+    document.querySelectorAll('.comparison').forEach(comp => {
+      const range = comp.querySelector('.comparison-range');
+      range.addEventListener('input', () => {
+        comp.style.setProperty('--split', range.value + '%');
+      });
+    });
+  </script>
 </body>
 </html>
