@@ -85,6 +85,7 @@
 .skill-card {
   margin: var(--space-sm);
   border-radius: .5em;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -109,6 +110,7 @@
 
 .skill-card>* {
   position: relative;
+  font-weight: 600;
   z-index: 1;
 }
 
