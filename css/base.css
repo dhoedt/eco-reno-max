@@ -40,28 +40,36 @@ a {
   text-decoration: none;
 }
 
-/* Nav */
 header {  
   background-color: var(--color-primary);
-  padding: var(--space-sm);
 }
 
-nav {
-  max-width: var(--max-width);
-  margin: auto;
+header .wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+header address {
+  display: flex;
+  gap: var(--space-md);
+  font-style: normal;
+}
+
+header address a {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--space-sm);
+  color: var(--color-bg);
+}
+
+header nav {
+  display: flex;
+  gap: var(--space-md);
+  font-style: normal;
 }
 
 nav a {
   color: var(--color-bg);
-}
-
-nav img {
-  width: 3rem;
-  height: auto;
-  object-fit: cover;
 }
 
 footer {
