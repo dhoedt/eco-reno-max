@@ -3,12 +3,14 @@
   --color-bg: #f9f9f7;
   --color-text: #1a1a1a;
   --color-muted: #555;
-  --font-base: 'Urbanist', system-ui, sans-serif;
   --font-heading: 'Fraunces', Georgia, serif;
+  --font-base: 'Urbanist', system-ui, sans-serif;
   --space-sm: 0.5rem;
   --space-md: 1.5rem;
   --space-lg: 3rem;
-  --max-width: 1000px;
+  --wrapper-width: 1000px;
+  --media-small: 760px;
+  --media-large: 1280px;
 }
 
 *,
@@ -33,7 +35,7 @@ h1, h2, h3 {
 }
 
 .wrapper {
-  max-width: var(--max-width);
+  max-width: var(--wrapper-width);
   margin: auto;
   padding: var(--space-sm);
 }
