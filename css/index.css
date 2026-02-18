@@ -1,3 +1,7 @@
+section {
+padding: var(--space-md) 0;
+}
+
 /* Hero */
 .hero {
   position: relative;
@@ -34,7 +38,7 @@
 }
 
 .hero-content p {  
-  font-size: clamp(1rem, 2vw, 3rem);
+  font-size: clamp(1.5rem, 2vw, 3rem);
   max-width: var(--wrapper-width);
   margin: 0 var(--space-md);
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
@@ -63,7 +67,6 @@
   outline: none;
 }
 
-/* Skills */
 .skills-grid {
   display: grid;
   grid-template-columns: 1fr;
