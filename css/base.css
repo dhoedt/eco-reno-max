@@ -8,6 +8,7 @@
   --space-sm: 0.5rem;
   --space-md: 1.5rem;
   --space-lg: 3rem;
+  --header-height: 3rem;
   --wrapper-width: 1000px;
   --media-small: 760px;
   --media-large: 1280px;
@@ -25,6 +26,7 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
+  padding-top: var(--header-height);
 }
 
 h1, h2, h3 {
@@ -51,6 +53,12 @@ a {
 }
 
 header {
+  height: var(--header-height);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
   background-color: var(--color-primary);
 }
 
