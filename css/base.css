@@ -20,6 +20,10 @@
   font-style: normal;
 }
 
+ul {  
+  list-style: none;
+}
+
 body {
   font-family: var(--font-base);
   background-color: var(--color-bg);

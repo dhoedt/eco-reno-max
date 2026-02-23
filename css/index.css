@@ -135,3 +135,9 @@ header nav > a.cta {
 .skill-card--sanitaire {
   --card-bg: url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&h=300&fit=crop');
 }
+
+/* Contact */
+#contact li {
+  font-size: clamp(1rem, 1.5em, 2rem);
+  text-align: center;
+}
