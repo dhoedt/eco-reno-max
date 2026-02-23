@@ -10,8 +10,6 @@
   --space-lg: 3rem;
   --header-height: 3rem;
   --wrapper-width: 1000px;
-  --media-small: 760px;
-  --media-large: 1280px;
 }
 
 *,
@@ -50,6 +48,10 @@ h2::after {
   width: 3rem;
   height: 2px;
   background-color: var(--color-primary);
+}
+
+section {
+  padding: var(--space-lg) 0;
 }
 
 p {
