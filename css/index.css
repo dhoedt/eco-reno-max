@@ -1,7 +1,7 @@
 /* Hero */
 .hero {
   position: relative;
-  height: max(25em, 50vh);
+  height: clamp(20em, 25em, 50vh);
   background-image: url('https://images.unsplash.com/photo-1766802981940-fbb95fae583f?w=1200&h=600&fit=crop');
   background-size: cover;
   background-position: center;
@@ -16,6 +16,7 @@
 }
 
 .hero-content {
+  padding: var(--space-sm);
   position: absolute;
   inset: 0;
   display: flex;
@@ -158,11 +159,12 @@
 }
 
 /* Contact */
-#contact li {
-  font-size: clamp(1rem, 1.2rem, 1.5rem);
-  /* text-align: center; */
+#contact ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-#contact .wrapper {
-  padding: var(--wrapper-padding);
+#contact li {
+  font-size: clamp(1rem, 1.2rem, 1.5rem);
 }
