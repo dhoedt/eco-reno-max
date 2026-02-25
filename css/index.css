@@ -47,7 +47,7 @@
   border: 2px solid var(--color-bg);
   border-radius: 2rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.06rem;
   text-decoration: none;
   text-transform: uppercase;
   font-size: clamp(1rem, 1vw, 2rem);
@@ -87,7 +87,7 @@
 
 .skill-card {
   margin: var(--space-sm);
-  border-radius: .5em;
+  border-radius: .5rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   position: relative;
   overflow: hidden;
