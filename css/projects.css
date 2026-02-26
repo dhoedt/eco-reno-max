@@ -1,6 +1,6 @@
 /* Project */
 .project {
-  height: 40vh;
+  height: clamp(20rem, 30vh, 20rem);
   display: flex;
   flex-direction: column;
   border-radius: 0.5rem;
@@ -11,7 +11,7 @@
 
 @media (min-width: 760px) {
   .project {
-    height: 30vh;
+    height: clamp(15rem, 30vh, 20rem);
     flex-direction: row;
   }
 

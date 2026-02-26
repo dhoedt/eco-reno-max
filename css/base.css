@@ -11,7 +11,7 @@
   --space-md: 1.5rem;
   --space-lg: 3rem;
   --header-height: 3rem;
-  --margin-title: min(var(--space-md), 1vh);
+  --margin-title: min(var(--space-md), 2vh);
   --main-padding: min(2rem, 3vh);
   --section-padding: min(2rem, 3vh);
   --wrapper-width: min(50rem, 95%);
@@ -89,6 +89,10 @@ img {
 a {
   color: var(--color-primary);
   text-decoration: none;
+}
+
+a:hover {
+  border-bottom: .1rem solid var(--color-bg);
 }
 
 /* Layout */
