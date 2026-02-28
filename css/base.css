@@ -117,6 +117,12 @@ header .wrapper {
   justify-content: space-between;
 }
 
+header nav {
+  display: flex;
+  gap: var(--space-md);
+  font-style: normal;
+}
+
 header address {
   display: flex;
   gap: var(--space-sm);
@@ -126,12 +132,6 @@ header address a {
   display: flex;
   gap: var(--space-sm);
   color: var(--color-bg);
-}
-
-header nav {
-  display: flex;
-  gap: var(--space-md);
-  font-style: normal;
 }
 
 header .cta {

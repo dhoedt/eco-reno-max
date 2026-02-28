@@ -29,8 +29,9 @@
   z-index: 2;
 }
 
-.hero-content h1 {
-  font-size: clamp(2rem, 10vw, 7rem);
+.hero-content img {
+  width: clamp(25rem, 70%, 45rem);
+  height: auto;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
 }
 
