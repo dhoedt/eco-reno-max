@@ -14,7 +14,7 @@
   --margin-title: min(var(--space-md), 2vh);
   --main-padding: min(2rem, 3vh);
   --section-padding: min(2rem, 3vh);
-  --wrapper-width: min(50rem, 95%);
+  --wrapper-width: min(60rem, 95%);
 }
 
 body {

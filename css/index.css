@@ -97,7 +97,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  padding: var(--space-lg);
+  padding: var(--space-md);
   color: var(--color-bg);
 }
 
@@ -167,5 +167,8 @@
 }
 
 #contact li {
-  font-size: clamp(1rem, 1.2rem, 1.5rem);
+  font-size: clamp(1rem, 3vh, 1.3rem);  
+  i {
+    margin-inline-end: .5rem;
+  }
 }
