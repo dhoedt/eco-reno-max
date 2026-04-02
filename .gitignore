@@ -1,2 +1,6 @@
+.venv
 .claude/settings.local.json
 sandbox/**
+img/400
+img/800
+img/1200
