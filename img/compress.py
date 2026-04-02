@@ -54,12 +54,14 @@ def process(src: Path) -> None:
         out_dir = src.parent.parent / str(w)
         out_dir.mkdir(exist_ok=True)
 
-        out = out_dir / f"{src.stem}_{w}x{h}{src.suffix}"
+        out = out_dir / f"{src.stem}{src.suffix}"
+        # out = out_dir / f"{src.stem}_{w}x{h}{src.suffix}"
         cropped.save(out, quality=QUALITY, optimize=OPTIMIZE)
         print(f"Saved: {out}")
 
         for fmt, save_opts in FORMATS:
-            out_fmt = out_dir / f"{src.stem}_{w}x{h}.{fmt}"
+            out_fmt = out_dir / f"{src.stem}.{fmt}"
+            # out_fmt = out_dir / f"{src.stem}_{w}x{h}.{fmt}"
             cropped.save(out_fmt, **save_opts)
             print(f"Saved: {out_fmt}")
 
