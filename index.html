@@ -31,10 +31,10 @@
       </nav>
       <div id="navbar-right-side">
         <address>
-          <a href="mailto:ecoreno.max@gmail.com">
+          <a href="mailto:ecoreno.max@gmail.com" aria-label="Envoyer un email" data-i18n-label="nav.email">
             <i class="fa-solid fa-envelope" aria-hidden="true"></i>
           </a>
-          <a href="tel:+32493044788">
+          <a href="tel:+32493044788" aria-label="Appeler" data-i18n-label="nav.phone">
             <i class="fa-solid fa-phone" aria-hidden="true"></i>
             <span>+32 493 04 47 88</span>
           </a>
@@ -49,12 +49,14 @@
 
   <section class="hero">
     <picture class="hero-bg">
-      <source type="image/jpeg"
+      <img
+        src="https://images.unsplash.com/photo-1540104941499-a04da4661926?w=1200&fit=crop"
         srcset="https://images.unsplash.com/photo-1540104941499-a04da4661926?w=400&fit=crop 400w,
                 https://images.unsplash.com/photo-1540104941499-a04da4661926?w=800&fit=crop 800w,
                 https://images.unsplash.com/photo-1540104941499-a04da4661926?w=1200&fit=crop 1200w"
-        sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px">
-      <img src="https://images.unsplash.com/photo-1540104941499-a04da4661926" alt="hero image">
+        sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px"
+        fetchpriority="high"
+        alt="hero image">
     </picture>
     <div class="hero-content">
       <!-- <h1>EcoRéno Max</h1> -->
@@ -145,13 +147,13 @@
         <address>
           <ul>
             <li>
-              <a href="mailto:ecoreno.max@gmail.com">
+              <a href="mailto:ecoreno.max@gmail.com" aria-label="Envoyer un email" data-i18n-label="nav.email">
                 <i class="fa-solid fa-envelope" aria-hidden="true"></i>
                 ecoreno.max@gmail.com
               </a>
             </li>
             <li>
-              <a href="tel:+32493044788">
+              <a href="tel:+32493044788" aria-label="Appeler" data-i18n-label="nav.phone">
                 <i class="fa-solid fa-phone" aria-hidden="true"></i>
                 +32 493 04 47 88
               </a>
