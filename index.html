@@ -5,13 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="EcoRenoMax - Maximilien CUVELIER, entrepreneur en éco-construction">
-  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1766802981940-fbb95fae583f?w=1200&h=600&fit=crop">
+  <link rel="preload" as="image"
+    imagesrcset="https://images.unsplash.com/photo-1540104941499-a04da4661926?w=400&fit=crop 400w,
+                 https://images.unsplash.com/photo-1540104941499-a04da4661926?w=800&fit=crop 800w,
+                 https://images.unsplash.com/photo-1540104941499-a04da4661926?w=1200&fit=crop 1200w"
+    imagesizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Urbanist:wght@300;400;500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> 
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/index.css">
   <title>EcoRenoMax</title>
@@ -44,6 +48,14 @@
   </header>
 
   <section class="hero">
+    <picture class="hero-bg">
+      <source type="image/jpeg"
+        srcset="https://images.unsplash.com/photo-1540104941499-a04da4661926?w=400&fit=crop 400w,
+                https://images.unsplash.com/photo-1540104941499-a04da4661926?w=800&fit=crop 800w,
+                https://images.unsplash.com/photo-1540104941499-a04da4661926?w=1200&fit=crop 1200w"
+        sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px">
+      <img src="https://images.unsplash.com/photo-1540104941499-a04da4661926" alt="hero image">
+    </picture>
     <div class="hero-content">
       <!-- <h1>EcoRéno Max</h1> -->
       <img src="./img/logo.svg" alt="logo EcoRéno Max">
@@ -146,7 +158,8 @@
             </li>
             <li>
               <i class="fa-solid fa-map" aria-hidden="true"></i>
-              <span data-i18n="contact.location">Basé à Bassilly ; je me déplace volontiers en fonction de vos projets</span>
+              <span data-i18n="contact.location">Basé à Bassilly ; je me déplace volontiers en fonction de vos
+                projets</span>
             </li>
             <li>
               <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
