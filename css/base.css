@@ -134,6 +134,16 @@ header address a {
   color: var(--color-bg);
 }
 
+header address a>span {
+  display: none;
+}
+
+@media (min-width: 760px) {
+  header address a>span {
+    display: inline-block;
+  }
+}
+
 header .cta {
   border: 1px solid var(--color-bg);
   padding-block: var(--space-xs);
