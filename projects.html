@@ -23,55 +23,61 @@
       <nav>
         <a href="index.html">EcoRéno Max</a>
       </nav>
-      <address>
-        <a href="mailto:ecoreno.max@gmail.com">
-          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-        </a>
-        <a href="tel:+32493044788">
-          <i class="fa-solid fa-phone" aria-hidden="true"></i>
-          +32 493 04 47 88
-        </a>
-      </address>
+      <div id="navbar-right-side">
+        <address>
+          <a href="mailto:ecoreno.max@gmail.com">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+          </a>
+          <a href="tel:+32493044788">
+            <i class="fa-solid fa-phone" aria-hidden="true"></i>
+            +32 493 04 47 88
+          </a>
+        </address>
+        <div class="lang-selector">
+          <button class="lang-btn lang-btn-nl active" data-lang="nl" aria-label="Nederlands">🇳🇱</button>
+          <button class="lang-btn lang-btn-fr" data-lang="fr" aria-label="Français">🇫🇷</button>
+        </div>
+      </div>
     </div>
   </header>
 
   <main>
     <section id="projects">
       <div class="wrapper">
-        <h2>Réalisations</h2>
+        <h2 data-i18n="projects.heading">Réalisations</h2>
         <article class="project">
           <div class="comparison">
             <picture class="comparison-before">
               <source type="image/jpeg"
                 srcset="./img/400/before.jpg 400w, ./img/800/before.jpg 800w, ./img/1200/before.jpg 1200w"
                 sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px">
-                <img src="./img/src/before.png" alt="Avant rénovation énergétique">
+              <img src="./img/src/before.png" alt="Avant rénovation énergétique" data-i18n-alt="project1.before">
             </picture>
-              <source type="image/webp"
-                srcset="./img/400/before.webp 400w, ./img/800/before.webp 800w, ./img/1200/before.webp 1200w"
-                sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px">
+            <source type="image/webp"
+              srcset="./img/400/before.webp 400w, ./img/800/before.webp 800w, ./img/1200/before.webp 1200w"
+              sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px">
             </picture>
             <picture class="comparison-after">
               <source type="image/jpeg"
                 srcset="./img/400/after.jpg 400w, ./img/800/after.jpg 800w, ./img/1200/after.jpg 1200w"
                 sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px">
-                <img src="./img/src/after.png" alt="Après rénovation énergétique">
+              <img src="./img/src/after.png" alt="Après rénovation énergétique" data-i18n-alt="project1.after">
             </picture>
-              <source type="image/webp"
-                srcset="./img/400/after.webp 400w, ./img/800/after.webp 800w, ./img/1200/after.webp 1200w"
-                sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px">
+            <source type="image/webp"
+              srcset="./img/400/after.webp 400w, ./img/800/after.webp 800w, ./img/1200/after.webp 1200w"
+              sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px">
             </picture>
             <div class="comparison-handle">
               <div class="comparison-handle-btn">&#8592; &#8594;</div>
             </div>
-            <span class="comparison-label comparison-label--before">Avant</span>
-            <span class="comparison-label comparison-label--after">Après</span>
+            <span class="comparison-label comparison-label--before" data-i18n="project1.label-before">Avant</span>
+            <span class="comparison-label comparison-label--after" data-i18n="project1.label-after">Après</span>
             <input class="comparison-range" type="range" min="0" max="100" value="50"
-              aria-label="Comparer avant et après">
+              aria-label="Comparer avant et après" data-i18n-label="project1.compare">
           </div>
           <div class="project-body">
-            <h3>Rénovation de sol</h3>
-            <p>Suppression d'une couche d'un mortier d'égalisation qui couvrait un vieux carrelage d'époque.</p>
+            <h3 data-i18n="project1.title">Rénovation de sol</h3>
+            <p data-i18n="project1.desc">Suppression d'une couche d'un mortier d'égalisation qui couvrait un vieux carrelage d'époque.</p>
           </div>
         </article>
       </div>
@@ -90,6 +96,7 @@
       });
     });
   </script>
+  <script src="js/translation.js"></script>
 </body>
 
 </html>
