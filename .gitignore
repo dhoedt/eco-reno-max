@@ -1,4 +1,5 @@
 .venv
+.playwright*
 .claude/settings.local.json
 sandbox/**
 img/400
