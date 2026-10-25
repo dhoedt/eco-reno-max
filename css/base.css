@@ -3,17 +3,34 @@
   --color-bg: #f9f9f7;
   --color-text: #1a1a1a;
   --color-muted: #555;
+  --color-white: #fff;
+  --color-overlay: rgba(0, 0, 0, 0.5);
+  --color-overlay-light: rgba(0, 0, 0, 0.15);
+  --color-overlay-dark: rgba(0, 0, 0, 0.6);
+  --color-border-light: rgba(255, 255, 255, 0.3);
+  --color-hover-light: rgba(226, 232, 206, 0.1);
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-shadow-strong: rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 0.25rem 1rem var(--color-shadow);
+  --shadow-card-strong: 0 0.25rem 1rem var(--color-shadow-strong);
+  --shadow-raised: 0 0.125rem 0.5rem var(--color-shadow-strong);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --tap-target: 2.75rem;
   --font-heading: 'Fraunces', Georgia, serif;
   --font-base: 'Urbanist', system-ui, sans-serif;
   --font-size-small: .8rem;
+  --font-size-lead: clamp(1rem, 0.9rem + 0.4vw, 1.3rem);
   --space-xs: 0.2rem;
   --space-sm: 0.5rem;
+  --space-gutter: 1rem;
   --space-md: 1.5rem;
   --space-lg: 3rem;
   --header-height: 3rem;
-  --margin-title: min(var(--space-md), 2vh);
-  --main-padding: min(2rem, 3vh);
-  --section-padding: min(2rem, 3vh);
+  /* Shrink on short screens (landscape phones) but never collapse */
+  --margin-title: clamp(var(--space-sm), 2vh, var(--space-md));
+  --main-padding: clamp(var(--space-gutter), 3vh, 2rem);
+  --section-padding: clamp(var(--space-gutter), 3vh, 2rem);
   --wrapper-width: min(60rem, 95%);
 }
 
@@ -23,10 +40,16 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   padding-top: var(--header-height);
+  /* Sticky footer: footer stays at the bottom on short pages */
+  min-height: 100dvh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-  padding-block: var(--main-padding);  
+  padding-block: var(--main-padding);
+  flex: 1;
 }
 
 *,
@@ -115,6 +138,13 @@ header .wrapper {
   height: var(--header-height);
   display: flex;
   justify-content: space-between;
+  font-size: var(--font-size-small);
+}
+
+@media (min-width: 400px) {
+  header .wrapper {
+    font-size: 1rem;
+  }
 }
 
 header .cta {
@@ -131,26 +161,63 @@ header .cta:focus-visible {
   color: var(--color-primary);
 }
 
+/* Enlarge the touch area of bordered header controls without changing their look */
+header .cta,
+.lang-btn {
+  position: relative;
+}
+
+header .cta::after,
+.lang-btn::after {
+  content: '';
+  position: absolute;
+  inset-block: calc((100% - var(--tap-target)) / 2);
+  inset-inline: 0;
+}
+
 header #navbar-right-side {
   display: flex;
-  gap: var(--space-md);
+  gap: var(--space-sm);
 }
 
 header nav {
   display: flex;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   font-style: normal;
+  white-space: nowrap;
+}
+
+header nav a:not(.cta) {
+  display: flex;
+  min-height: var(--tap-target);
+}
+
+@media (min-width: 760px) {
+  header #navbar-right-side,
+  header nav {
+    gap: var(--space-md);
+  }
 }
 
 header address {
   display: flex;
-  gap: var(--space-sm);
 }
 
 header address a {
   display: flex;
+  justify-content: center;
   gap: var(--space-sm);
+  /* WCAG AA minimum width on the smallest phones, full touch size from 400px */
+  min-width: 1.5rem;
+  min-height: var(--tap-target);
+  white-space: nowrap;
   color: var(--color-bg);
+}
+
+@media (min-width: 400px) {
+  header address a {
+    min-width: var(--tap-target);
+  }
 }
 
 header address a>span {
@@ -179,19 +246,26 @@ header address a>span {
 .lang-btn {
     flex: 1;
     background: none;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid var(--color-border-light);
     color: var(--color-bg);
     padding: var(--space-sm);
     cursor: pointer;
     font-family: var(--font-base);
 }
 
+/* Full touch width once the header has room for it */
+@media (min-width: 760px) {
+  .lang-btn {
+    min-width: var(--tap-target);
+  }
+}
+
 .lang-btn:first-child {
-    border-radius: 4px 0 0 4px;
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
 }
 
 .lang-btn:last-child {
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 
 .lang-btn.active {
@@ -201,7 +275,7 @@ header address a>span {
 }
 
 .lang-btn:hover:not(.active) {
-    background-color: rgba(226, 232, 206, 0.1);
+    background-color: var(--color-hover-light);
 }
 
 footer {

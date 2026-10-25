@@ -5,11 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="EcoRenoMax - Maximilien CUVELIER, entrepreneur en éco-construction">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="preload" as="image"
     imagesrcset="https://images.unsplash.com/photo-1540104941499-a04da4661926?w=400&fit=crop 400w,
                  https://images.unsplash.com/photo-1540104941499-a04da4661926?w=800&fit=crop 800w,
-                 https://images.unsplash.com/photo-1540104941499-a04da4661926?w=1200&fit=crop 1200w"
-    imagesizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px">
+                 https://images.unsplash.com/photo-1540104941499-a04da4661926?w=1200&fit=crop 1200w,
+                 https://images.unsplash.com/photo-1540104941499-a04da4661926?w=1600&fit=crop 1600w,
+                 https://images.unsplash.com/photo-1540104941499-a04da4661926?w=2000&fit=crop 2000w"
+    imagesizes="(max-width: 800px) 800px, 100vw">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -40,8 +43,8 @@
           </a>
         </address>
         <div class="lang-selector">
-          <button class="lang-btn lang-btn-nl active" data-lang="nl" aria-label="Nederlands">🇳🇱</button>
-          <button class="lang-btn lang-btn-fr" data-lang="fr" aria-label="Français">🇫🇷</button>
+          <button class="lang-btn lang-btn-nl" data-lang="nl" aria-label="Nederlands">🇳🇱</button>
+          <button class="lang-btn lang-btn-fr active" data-lang="fr" aria-label="Français">🇫🇷</button>
         </div>
       </div>
     </div>
@@ -53,14 +56,16 @@
         src="https://images.unsplash.com/photo-1540104941499-a04da4661926?w=1200&fit=crop"
         srcset="https://images.unsplash.com/photo-1540104941499-a04da4661926?w=400&fit=crop 400w,
                 https://images.unsplash.com/photo-1540104941499-a04da4661926?w=800&fit=crop 800w,
-                https://images.unsplash.com/photo-1540104941499-a04da4661926?w=1200&fit=crop 1200w"
-        sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px"
+                https://images.unsplash.com/photo-1540104941499-a04da4661926?w=1200&fit=crop 1200w,
+                https://images.unsplash.com/photo-1540104941499-a04da4661926?w=1600&fit=crop 1600w,
+                https://images.unsplash.com/photo-1540104941499-a04da4661926?w=2000&fit=crop 2000w"
+        sizes="(max-width: 800px) 800px, 100vw"
         fetchpriority="high"
-        alt="hero image">
+        alt="">
     </picture>
     <div class="hero-content">
       <!-- <h1>EcoRéno Max</h1> -->
-      <img src="./img/logo.svg" alt="logo EcoRéno Max">
+      <img src="./img/logo.svg" width="1411" height="216" alt="logo EcoRéno Max">
       <p data-i18n="hero.tagline">De votre idée, à sa réalisation en passant par nos cerveaux et mes mains.</p>
       <a href="projects.html" class="cta" data-i18n="hero.cta">voir nos réalisations</a>
     </div>
@@ -95,6 +100,7 @@
           J'allie savoir-faire artisanal, innovation et respect des normes
           environnementales afin de créer des espaces durables et performants pour votre bien-être.
         </p>
+      </div>
     </section>
 
     <section id="skills">

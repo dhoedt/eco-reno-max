@@ -1,7 +1,7 @@
 /* Hero */
 .hero {
   position: relative;
-  height: clamp(20em, 25em, 50vh);
+  height: clamp(20rem, 50vh, 25rem);
   overflow: hidden;
   view-timeline: --hero block;
 }
@@ -33,7 +33,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.6));
+  background: linear-gradient(to bottom, var(--color-overlay-light), var(--color-overlay-dark));
   z-index: 1;
 }
 
@@ -52,14 +52,15 @@
 }
 
 .hero-content img {
-  width: clamp(25rem, 70%, 45rem);
+  width: clamp(15rem, 85%, 45rem);
   height: auto;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  /* text-shadow does not apply to images: drop-shadow follows the SVG shape */
+  filter: drop-shadow(0 0.125rem 0.75rem var(--color-shadow-strong));
 }
 
 .hero-content p {
   font-size: clamp(1rem, 5vw, 2rem);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0.0625rem 0.25rem var(--color-overlay);
 }
 
 .hero-content .cta {
@@ -73,7 +74,7 @@
   letter-spacing: 0.06rem;
   text-decoration: none;
   text-transform: uppercase;
-  font-size: clamp(1rem, 1vw, 2rem);
+  font-size: clamp(1rem, 0.75rem + 0.5vw, 1.25rem);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -86,32 +87,45 @@
 #about p,
 #about li {
   margin-bottom: var(--space-sm);
-  font-size: clamp(1rem, 1.1rem, 1.3rem);
-  text-align: justify;
+  /* Readable line length: wider lines open large gaps once justified */
+  max-width: 70ch;
+  font-size: var(--font-size-lead);
+}
+
+/* Justify only where lines are long enough to avoid word gaps */
+@media (min-width: 760px) {
+  #about p,
+  #about li {
+    text-align: justify;
+    hyphens: auto;
+  }
 }
 
 .skills-grid {
   display: grid;
-  grid-template-columns: 1fr;
   grid-template-columns: repeat(2, 1fr);
+  /* Gap instead of card margins: outer cards stay aligned with the headings */
+  gap: var(--space-gutter);
+}
+
+/* 9 cards: the last one spans the full row in the 2-column layout */
+.skill-card:last-child {
+  grid-column: 1 / -1;
 }
 
 @media (min-width: 760px) {
   .skills-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-}
 
-@media (min-width: 1280px) {
-  .skills-grid {
-    grid-template-columns: repeat(5, 1fr);
+  .skill-card:last-child {
+    grid-column: auto;
   }
 }
 
 .skill-card {
-  margin: var(--space-sm);
-  border-radius: .5rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card-strong);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -127,10 +141,9 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3)), var(--card-bg);
+  background-image: linear-gradient(var(--color-overlay), var(--color-overlay)), var(--card-bg);
   background-size: cover;
   background-position: center;
-  opacity: 0.8;
   z-index: 0;
 }
 
@@ -185,12 +198,22 @@
 #contact ul {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-xs);
 }
 
+/* Same height for every row, whether it holds a link or plain text */
 #contact li {
-  font-size: clamp(1rem, 3vh, 1.3rem);  
+  display: flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  font-size: var(--font-size-lead);
   i {
     margin-inline-end: .5rem;
   }
+}
+
+#contact a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
 }
