@@ -2,12 +2,23 @@
 .hero {
   position: relative;
   height: clamp(20em, 25em, 50vh);
+  overflow: hidden;
+  view-timeline: --hero block;
+}
+
+@keyframes hero-parallax {
+  from { transform: translateY(-10%); }
+  to   { transform: translateY(10%); }
 }
 
 .hero-bg {
   position: absolute;
-  inset: 0;
+  inset: -15% 0;
   z-index: 0;
+  will-change: transform;
+  animation: hero-parallax linear both;
+  animation-timeline: --hero;
+  animation-range: cover 0% exit 100%;
 }
 
 .hero-bg img {
