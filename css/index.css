@@ -171,7 +171,7 @@
 }
 
 .skill-card--carrelage {
-  --card-bg: url('https://images.unsplash.com/photo-1723902499543-08aff0f346bf?w=400&h=300&fit=crop');
+  --card-bg: image-set(url('../img/skills/carrelage-sm.webp') 1x, url('../img/skills/carrelage-sm@2x.webp') 2x);
 }
 
 .skill-card--cloison {
@@ -179,11 +179,11 @@
 }
 
 .skill-card--bois {
-  --card-bg: url('https://images.unsplash.com/photo-1659930087003-2d64e33181f7?w=400&h=300&fit=crop');
+  --card-bg: image-set(url('../img/skills/travail-du-bois-sm.webp') 1x, url('../img/skills/travail-du-bois-sm@2x.webp') 2x);
 }
 
 .skill-card--revetements {
-  --card-bg: url('https://images.unsplash.com/photo-1769690176928-0b63f20ea22b?w=400&h=300&fit=crop');
+  --card-bg: image-set(url('../img/skills/revetements-de-sol-sm.webp') 1x, url('../img/skills/revetements-de-sol-sm@2x.webp') 2x);
 }
 
 .skill-card--ventilation {
@@ -192,6 +192,21 @@
 
 .skill-card--sanitaire {
   --card-bg: url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&h=300&fit=crop');
+}
+
+/* Wider, shorter cards in the 3-column layout */
+@media (min-width: 760px) {
+  .skill-card--carrelage {
+    --card-bg: image-set(url('../img/skills/carrelage-lg.webp') 1x, url('../img/skills/carrelage-lg@2x.webp') 2x);
+  }
+
+  .skill-card--bois {
+    --card-bg: image-set(url('../img/skills/travail-du-bois-lg.webp') 1x, url('../img/skills/travail-du-bois-lg@2x.webp') 2x);
+  }
+
+  .skill-card--revetements {
+    --card-bg: image-set(url('../img/skills/revetements-de-sol-lg.webp') 1x, url('../img/skills/revetements-de-sol-lg@2x.webp') 2x);
+  }
 }
 
 /* Contact */
