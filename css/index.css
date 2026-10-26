@@ -6,14 +6,16 @@
   view-timeline: --hero block;
 }
 
+/* The translation is relative to .hero-bg (154% of the hero): 17% of it stays
+   within the 27% overflow above and below, so the image never shows an edge */
 @keyframes hero-parallax {
-  from { transform: translateY(-10%); }
-  to   { transform: translateY(10%); }
+  from { transform: translateY(-17%); }
+  to   { transform: translateY(17%); }
 }
 
 .hero-bg {
   position: absolute;
-  inset: -15% 0;
+  inset: -27% 0;
   z-index: 0;
   will-change: transform;
   animation: hero-parallax linear both;
