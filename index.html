@@ -103,6 +103,45 @@
       </div>
     </section>
 
+    <section id="house">
+      <div class="wrapper house-layout">
+        <figure class="house-figure">
+          <!-- Segments come from img/house.svg; the viewBox must match that file's -->
+          <svg class="house" viewBox="126 -1 185 214" xmlns="http://www.w3.org/2000/svg">
+            <use class="house-segment" data-segment="1" href="img/house.svg#house-segment-1" />
+            <use class="house-segment" data-segment="2" href="img/house.svg#house-segment-2" />
+            <use class="house-segment" data-segment="3" href="img/house.svg#house-segment-3" />
+            <use class="house-segment" data-segment="4" href="img/house.svg#house-segment-4" />
+            <use class="house-segment" data-segment="5" href="img/house.svg#house-segment-5" />
+          </svg>
+        </figure>
+        <!-- Texts are linked to their segment by data-segment only: each one can be moved anywhere on the page.
+             .house-texts stacks them on top of each other -->
+        <div class="house-texts">
+          <article class="house-text" data-segment="1">
+            <h3 data-i18n="house.title1">Un accompagnement de A à Z</h3>
+            <p data-i18n="house.text1">Quel que soit le stade de votre projet, dès sa conception et/ou dans sa réalisation, je vous aide à mettre vos envies en pratique et à faire le tri dans les nombreuses alternatives souvent disponibles.</p>
+          </article>
+          <article class="house-text" data-segment="2">
+            <h3 data-i18n="house.title2">Un devis détaillé et gratuit</h3>
+            <p data-i18n="house.text2">Nous discutons de vos envies et je vous remets un devis détaillé et gratuit que nous parcourons ensemble et qui sert de canevas pour la suite.</p>
+          </article>
+          <article class="house-text" data-segment="3">
+            <h3 data-i18n="house.title3">Un résultat au top en toute sérénité</h3>
+            <p data-i18n="house.text3">Quand on est rigoureux et précis dès le début, on évite un maximum les mauvaises surprises par la suite et le reste coule de source.</p>
+          </article>
+          <article class="house-text" data-segment="4">
+            <h3 data-i18n="house.title4">Un prix raisonné</h3>
+            <p data-i18n="house.text4">Seul ou en vous accompagnant si vous le désirez, j’exécute les travaux décidés précédemment.</p>
+          </article>
+          <article class="house-text" data-segment="5">
+            <h3 data-i18n="house.title5">Une empreinte carbone réduite</h3>
+            <p data-i18n="house.text5">J’essaye d’utiliser au maximum des techniques et produits sains pour vous, pour l’environnement et pour moi.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="skills">
       <div class="wrapper">
         <h2 data-i18n="services.heading">Services</h2>

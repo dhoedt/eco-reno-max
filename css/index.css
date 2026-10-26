@@ -101,6 +101,106 @@
   }
 }
 
+/* Interactive house: outline in the left half, texts in the right half */
+.house-layout {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.house-figure,
+.house-layout .house-texts {
+  flex: 1 1 50%;
+}
+
+.house-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* A third of its half, i.e. a sixth of the section width */
+.house {
+  display: block;
+  width: 33%;
+}
+
+/* The fill set on each <use> is inherited by its polygon in img/house.svg */
+.house-segment {
+  fill: var(--color-text);
+  cursor: pointer;
+  transition: fill 0.2s ease;
+  animation: house-cycle-segment 10s ease-in-out infinite;
+}
+
+/* Stacks the texts on top of each other; only the active one is visible */
+.house-texts {
+  display: grid;
+  pointer-events: none;
+}
+
+.house-texts .house-text {
+  grid-area: 1 / 1;
+}
+
+/* Texts can live anywhere on the page: they follow their segment through data-segment */
+.house-text {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  animation: house-cycle-text 10s ease-in-out infinite;
+}
+
+.house-text h3 {
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-lead);
+  color: var(--color-primary);
+}
+
+/* Short measure: a compact block that stays clear of the frame's right edge */
+.house-text p {
+  max-width: 40ch;
+}
+
+/* Each segment and its text get the spotlight for 2s, from the roof down to the floor */
+:is(.house-segment, .house-text)[data-segment="2"] { animation-delay: 2s; }
+:is(.house-segment, .house-text)[data-segment="3"] { animation-delay: 4s; }
+:is(.house-segment, .house-text)[data-segment="4"] { animation-delay: 6s; }
+:is(.house-segment, .house-text)[data-segment="5"] { animation-delay: 8s; }
+
+@keyframes house-cycle-segment {
+  0%, 20%, 100% { fill: var(--color-text); }
+  2%, 18%       { fill: var(--color-primary); }
+}
+
+@keyframes house-cycle-text {
+  0%, 20%, 100% { opacity: 0; }
+  2%, 18%       { opacity: 1; }
+}
+
+/* Stop the cycle once the visitor interacts, and follow the hovered segment instead */
+body:has(.house:hover) :is(.house-segment, .house-text) {
+  animation: none;
+}
+
+.house-segment:hover {
+  fill: var(--color-primary);
+}
+
+body:has(.house-segment[data-segment="1"]:hover) .house-text[data-segment="1"],
+body:has(.house-segment[data-segment="2"]:hover) .house-text[data-segment="2"],
+body:has(.house-segment[data-segment="3"]:hover) .house-text[data-segment="3"],
+body:has(.house-segment[data-segment="4"]:hover) .house-text[data-segment="4"],
+body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .house-segment,
+  .house-text {
+    animation: none;
+  }
+}
+
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

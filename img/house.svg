@@ -1,0 +1,19 @@
+<svg viewBox="126 -1 185 214" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- House outline split in 5 segments, from the roof down to the floor.
+       Segments are defined once so a page can reference each one separately
+       (<use href="img/house.svg#house-segment-1">) and style it; they are also
+       drawn below so the file works as a standalone logo.
+       No fill on the polygons: they inherit it from the referencing <use> -->
+  <defs>
+    <polygon id="house-segment-1" points="218.0,30.9 292.7,105.6 306.1,92.2 218.0,4.1" />
+    <polygon id="house-segment-2" points="215.0,4.1 132.4,86.6 151.4,94.5 215.0,30.9" />
+    <polygon id="house-segment-3" points="131.3,89.4 131.3,206.3 150.3,187.3 150.3,97.3" />
+    <polygon id="house-segment-4" points="133.4,208.4 215.0,208.4 215.0,189.4 152.4,189.4" />
+    <polygon id="house-segment-5" points="218.0,208.4 280.9,208.4 280.9,189.4 218.0,189.4" />
+  </defs>
+  <use href="#house-segment-1" />
+  <use href="#house-segment-2" />
+  <use href="#house-segment-3" />
+  <use href="#house-segment-4" />
+  <use href="#house-segment-5" />
+</svg>
