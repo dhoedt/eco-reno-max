@@ -138,7 +138,7 @@
   fill: var(--color-text);
   cursor: pointer;
   transition: fill 0.2s ease;
-  animation: house-cycle-segment 10s ease-in-out infinite;
+  animation: house-cycle-segment 20s ease-in-out infinite;
 }
 
 /* Stacks the texts on top of each other; only the active one is visible */
@@ -155,7 +155,7 @@
 .house-text {
   opacity: 0;
   transition: opacity 0.2s ease;
-  animation: house-cycle-text 10s ease-in-out infinite;
+  animation: house-cycle-text 20s ease-in-out infinite;
 }
 
 .house-text h3 {
@@ -169,11 +169,11 @@
   max-width: 40ch;
 }
 
-/* Each segment and its text get the spotlight for 2s, from the roof down to the floor */
-:is(.house-segment, .house-text)[data-segment="2"] { animation-delay: 2s; }
-:is(.house-segment, .house-text)[data-segment="3"] { animation-delay: 4s; }
-:is(.house-segment, .house-text)[data-segment="4"] { animation-delay: 6s; }
-:is(.house-segment, .house-text)[data-segment="5"] { animation-delay: 8s; }
+/* Each segment and its text get the spotlight for 4s, from the roof down to the floor */
+:is(.house-segment, .house-text)[data-segment="2"] { animation-delay: 4s; }
+:is(.house-segment, .house-text)[data-segment="3"] { animation-delay: 8s; }
+:is(.house-segment, .house-text)[data-segment="4"] { animation-delay: 12s; }
+:is(.house-segment, .house-text)[data-segment="5"] { animation-delay: 16s; }
 
 @keyframes house-cycle-segment {
   0%, 20%, 100% { fill: var(--color-text); }
