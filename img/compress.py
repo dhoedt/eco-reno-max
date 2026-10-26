@@ -5,7 +5,7 @@ Usage: python compress.py
 """
 
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageOps
 
 SIZES = [400, 800, 1200]
 ASPECT = (16, 9)
@@ -44,7 +44,7 @@ def crop_to_aspect(img: Image.Image, width: int, height: int) -> Image.Image:
     return img.crop(box).resize((width, height), RESAMPLE)
 
 def process(src: Path) -> None:
-    img = Image.open(src).convert("RGB")
+    img = ImageOps.exif_transpose(Image.open(src)).convert("RGB")
     ratio_h = ASPECT[1]
     ratio_w = ASPECT[0]
 
