@@ -55,5 +55,9 @@
   "project5.title": "Parquet de pièce de vie",
   "project5.desc": "L'ancien carrelage en terre cuite cède la place à un parquet en chêne dans toute la pièce de vie.",
   "project5.before": "Pièce de vie avec carrelage en terre cuite",
-  "project5.after": "Pièce de vie avec parquet en chêne"
+  "project5.after": "Pièce de vie avec parquet en chêne",
+  "project6.title": "Crédence de cuisine",
+  "project6.desc": "Pose d'une crédence en carrelage métro blanc biseauté et déplacement des prises électriques.",
+  "project6.before": "Cuisine avec mur peint au-dessus du plan de travail",
+  "project6.after": "Cuisine avec crédence en carrelage métro blanc"
 }

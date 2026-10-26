@@ -55,5 +55,9 @@
   "project5.title": "Parket in de leefruimte",
   "project5.desc": "De oude terracottategels maken plaats voor een eiken parket in de hele leefruimte.",
   "project5.before": "Leefruimte met terracottategels",
-  "project5.after": "Leefruimte met eiken parket"
+  "project5.after": "Leefruimte met eiken parket",
+  "project6.title": "Keukenwand",
+  "project6.desc": "Plaatsing van een spatwand in witte afgeschuinde metrotegels en verplaatsing van de stopcontacten.",
+  "project6.before": "Keuken met geschilderde muur boven het werkblad",
+  "project6.after": "Keuken met spatwand in witte metrotegels"
 }
