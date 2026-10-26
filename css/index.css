@@ -101,7 +101,13 @@
   }
 }
 
-/* Interactive house: outline in the left half, texts in the right half */
+/* Interactive house: full-width tinted band, a little taller than the other sections */
+#house {
+  background-color: var(--color-bg-tint);
+  padding-block: var(--space-lg);
+}
+
+/* Outline in the left half, texts in the right half */
 .house-layout {
   display: flex;
   align-items: center;

@@ -1,6 +1,8 @@
 :root {
   --color-primary: #2d6a4f;
   --color-bg: #f9f9f7;
+  /* Faint brand-green surface for highlighted sections */
+  --color-bg-tint: color-mix(in srgb, var(--color-primary) 8%, var(--color-bg));
   --color-text: #1a1a1a;
   --color-muted: #555;
   --color-white: #fff;
