@@ -109,25 +109,34 @@
   padding-block: var(--space-lg);
 }
 
-/* Outline in the left half, texts in the right half */
+/* Mobile: outline above the texts; from 760px: outline in the left half, texts in the right half */
 .house-layout {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: var(--space-md);
 }
 
-.house-figure,
-.house-layout .house-texts {
-  flex: 1 1 50%;
+@media (min-width: 760px) {
+  .house-layout {
+    flex-direction: row;
+  }
+
+  .house-figure,
+  .house-layout .house-texts {
+    flex: 1 1 50%;
+  }
 }
 
 .house-figure {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  align-self: stretch;
 }
 
-/* A third of its half, i.e. a sixth of the section width */
+/* Mobile: a third of the section width; from 760px: a third of its half, i.e. a sixth */
 .house {
   display: block;
   width: 33%;
