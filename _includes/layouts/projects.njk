@@ -1,0 +1,55 @@
+---
+layout: layouts/base.njk
+pageName: projects
+pageScript: comparison
+titleKey: meta.projects.title
+descriptionKey: meta.projects.description
+# image: base name of the img/<width>/<image>-before|after files; swapped: the "after" photo sits in the left slot
+projects:
+  - { number: 1, image: floor, swapped: false, lazy: false }
+  - { number: 2, image: stairs, swapped: true, lazy: false }
+  - { number: 3, image: bedroom-floor, swapped: true, lazy: false }
+  - { number: 4, image: kitchen, swapped: true, lazy: true }
+  - { number: 5, image: living-room-floor, swapped: true, lazy: true }
+  - { number: 6, image: kitchen-backsplash, swapped: true, lazy: true }
+imageWidths: [400, 800, 1200]
+imageSizes: "(min-width: 1011px) 36rem, (min-width: 760px) 57vw, 95vw"
+---
+<main>
+    <section id="projects">
+      <div class="wrapper">
+        <h2>{{ "projects.heading" | t }}</h2>
+        {%- for project in projects %}
+        {%- set states = ["after", "before"] if project.swapped else ["before", "after"] %}
+        <article class="project">
+          <div class="comparison">
+            {%- for slot in ["before", "after"] %}
+            {%- set state = states[loop.index0] %}
+            {%- set file = project.image ~ "-" ~ state %}
+            <picture class="comparison-{{ slot }}">
+              {%- for format in ["webp", "jpg"] %}
+              <source type="image/{{ 'jpeg' if format == 'jpg' else format }}"
+                srcset="{% for width in imageWidths %}/img/{{ width }}/{{ file }}.{{ format }} {{ width }}w{% if not loop.last %}, {% endif %}{% endfor %}"
+                sizes="{{ imageSizes }}">
+              {%- endfor %}
+              <img src="/img/800/{{ file }}.jpg" width="1200" height="675"{% if project.lazy %} loading="lazy"{% endif %}
+                alt="{{ ('project' ~ project.number ~ '.' ~ state) | t }}">
+            </picture>
+            {%- endfor %}
+            <div class="comparison-handle">
+              <div class="comparison-handle-btn">&#8592; &#8594;</div>
+            </div>
+            <span class="comparison-label comparison-label--before">{{ "projects.label-before" | t }}</span>
+            <span class="comparison-label comparison-label--after">{{ "projects.label-after" | t }}</span>
+            <input class="comparison-range" type="range" min="0" max="100" value="50"
+              aria-label="{{ 'projects.compare' | t }}">
+          </div>
+          <div class="project-body">
+            <h3>{{ ("project" ~ project.number ~ ".title") | t }}</h3>
+            <p>{{ ("project" ~ project.number ~ ".desc") | t }}</p>
+          </div>
+        </article>
+        {%- endfor %}
+      </div>
+    </section>
+  </main>

@@ -1,0 +1,150 @@
+---
+layout: layouts/base.njk
+pageName: index
+pageScript: carousel
+titleKey: meta.home.title
+descriptionKey: meta.home.description
+hero:
+  image: https://images.unsplash.com/photo-1540104941499-a04da4661926
+  widths: [400, 800, 1200, 1600, 2000]
+  sizes: "(max-width: 800px) 800px, 100vw"
+---
+<section class="hero">
+    <picture class="hero-bg">
+      <img
+        src="{{ hero.image }}?w=1200&fit=crop"
+        srcset="{% for width in hero.widths %}{{ hero.image }}?w={{ width }}&fit=crop {{ width }}w{% if not loop.last %}, {% endif %}{% endfor %}"
+        sizes="{{ hero.sizes }}"
+        fetchpriority="high"
+        alt="">
+    </picture>
+    <div class="hero-content">
+      <img src="/img/logo.svg" width="1411" height="216" alt="{{ 'hero.logo-alt' | t }}">
+      <p>{{ "hero.tagline" | t }}</p>
+      <a href="{{ '/fr/projects/' | locale_url }}" class="cta">{{ "hero.cta" | t }}</a>
+    </div>
+  </section>
+
+  <main>
+    <section id="about">
+      <div class="wrapper">
+        <h2>{{ "about.heading" | t }}</h2>
+        <p>{{ "about.intro" | t }}</p>
+
+        <ul>
+          <li>{{ "about.bullet1" | t | safe }}</li>
+          <li>{{ "about.bullet2" | t | safe }}</li>
+          <li>{{ "about.bullet3" | t | safe }}</li>
+        </ul>
+
+        <p>{{ "about.outro" | t }}</p>
+      </div>
+    </section>
+
+    <section id="house">
+      <div class="wrapper house-layout">
+        <figure class="house-figure">
+          <!-- Segments come from img/house.svg; the viewBox must match that file's -->
+          <svg class="house" viewBox="126 -1 185 214" xmlns="http://www.w3.org/2000/svg">
+            {%- for segment in range(1, 6) %}
+            <use class="house-segment" data-segment="{{ segment }}" href="/img/house.svg#house-segment-{{ segment }}" />
+            {%- endfor %}
+          </svg>
+        </figure>
+        <!-- Texts are linked to their segment by data-segment only: each one can be moved anywhere on the page.
+             .house-texts stacks them on top of each other -->
+        <div class="house-texts">
+          {%- for segment in range(1, 6) %}
+          <article class="house-text" data-segment="{{ segment }}">
+            <h3>{{ ("house.title" ~ segment) | t }}</h3>
+            <p>{{ ("house.text" ~ segment) | t }}</p>
+          </article>
+          {%- endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" aria-labelledby="skills-heading">
+      <div class="wrapper">
+        <h2 id="skills-heading">{{ "services.heading" | t }}</h2>
+        <!-- CSS-only carousel: swipe / scroll-snap everywhere, arrows and dots where ::scroll-button / ::scroll-marker are supported -->
+        <ul class="skills-carousel" aria-label="{{ 'services.heading' | t }}">
+          <li class="skill-slide">
+            <img src="https://images.unsplash.com/photo-1670511146782-8f52c5a7bd08?w=600&h=450&fit=crop"
+              width="600" height="450" loading="lazy" alt="{{ 'skill.isolation-alt' | t }}">
+            <p><i class="fa-solid fa-house" aria-hidden="true"></i> <span>{{ "skill.isolation" | t }}</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=600&h=450&fit=crop"
+              width="600" height="450" loading="lazy" alt="{{ 'skill.peinture-alt' | t }}">
+            <p><i class="fa-solid fa-paint-roller" aria-hidden="true"></i> <span>{{ "skill.peinture" | t }}</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="https://images.unsplash.com/photo-1711967151478-65f508092c8a?w=600&h=450&fit=crop"
+              width="600" height="450" loading="lazy" alt="{{ 'skill.argile-alt' | t }}">
+            <p><i class="fa-solid fa-hands" aria-hidden="true"></i> <span>{{ "skill.argile" | t }}</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="/img/skills/carrelage-sm.webp" srcset="/img/skills/carrelage-sm.webp 1x, /img/skills/carrelage-sm@2x.webp 2x"
+              loading="lazy" alt="{{ 'skill.carrelage-alt' | t }}">
+            <p><i class="fa-solid fa-border-all" aria-hidden="true"></i> <span>{{ "skill.carrelage" | t }}</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="https://images.unsplash.com/photo-1768839725085-829e6ac7ac26?w=600&h=450&fit=crop"
+              width="600" height="450" loading="lazy" alt="{{ 'skill.cloison-alt' | t }}">
+            <p><i class="fa-solid fa-table-columns" aria-hidden="true"></i> <span>{{ "skill.cloison" | t }}</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="/img/skills/travail-du-bois-sm.webp" srcset="/img/skills/travail-du-bois-sm.webp 1x, /img/skills/travail-du-bois-sm@2x.webp 2x"
+              loading="lazy" alt="{{ 'skill.bois-alt' | t }}">
+            <p><i class="fa-solid fa-tree" aria-hidden="true"></i> <span>{{ "skill.bois" | t }}</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="/img/skills/revetements-de-sol-sm.webp" srcset="/img/skills/revetements-de-sol-sm.webp 1x, /img/skills/revetements-de-sol-sm@2x.webp 2x"
+              loading="lazy" alt="{{ 'skill.revetements-alt' | t }}">
+            <p><i class="fa-solid fa-grip-lines" aria-hidden="true"></i> <span>{{ "skill.revetements" | t }}</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="https://images.unsplash.com/photo-1574334292321-4844f63aefef?w=600&h=450&fit=crop"
+              width="600" height="450" loading="lazy" alt="{{ 'skill.ventilation-alt' | t }}">
+            <p><i class="fa-solid fa-wind" aria-hidden="true"></i> <span>{{ "skill.ventilation" | t }}</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&h=450&fit=crop"
+              width="600" height="450" loading="lazy" alt="{{ 'skill.sanitaire-alt' | t }}">
+            <p><i class="fa-solid fa-faucet" aria-hidden="true"></i> <span>{{ "skill.sanitaire" | t }}</span></p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrapper">
+        <h2>{{ "contact.heading" | t }}</h2>
+        <address>
+          <ul>
+            <li>
+              <a href="mailto:ecoreno.max@gmail.com" aria-label="{{ 'nav.email' | t }}">
+                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                ecoreno.max@gmail.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+32493044788" aria-label="{{ 'nav.phone' | t }}">
+                <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                +32 493 04 47 88
+              </a>
+            </li>
+            <li>
+              <i class="fa-solid fa-map" aria-hidden="true"></i>
+              <span>{{ "contact.location" | t }}</span>
+            </li>
+            <li>
+              <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+              BE 1022 762 951
+            </li>
+          </ul>
+        </address>
+      </div>
+    </section>
+  </main>

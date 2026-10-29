@@ -20,6 +20,7 @@
   --radius-md: 0.5rem;
   --radius-pill: 2rem;
   --tap-target: 2.75rem;
+  --flag-width: 1.75rem;
   --font-heading: 'Fraunces', Georgia, serif;
   --font-base: 'Urbanist', system-ui, sans-serif;
   --font-icon: 'Font Awesome 6 Free';
@@ -174,12 +175,12 @@ header .cta:focus-visible {
 
 /* Enlarge the touch area of bordered header controls without changing their look */
 header .cta,
-.lang-btn {
+.lang-selector summary {
   position: relative;
 }
 
 header .cta::after,
-.lang-btn::after {
+.lang-selector summary::after {
   content: '';
   position: absolute;
   inset-block: calc((100% - var(--tap-target)) / 2);
@@ -243,43 +244,108 @@ header address a>span {
 
 /* Language Selector */
 .lang-selector {
-    display: flex !important;
-    border-bottom: none !important;
+  position: relative;
 }
 
-.lang-btn {
-    flex: 1;
-    background: none;
-    border: 1px solid var(--color-border-light);
-    color: var(--color-bg);
-    padding: var(--space-sm);
-    cursor: pointer;
-    font-family: var(--font-base);
+.lang-selector summary {
+  display: flex;
+  gap: var(--space-sm);
+  padding-block: var(--space-xs);
+  padding-inline: var(--space-sm);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  list-style: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
 }
 
-/* Full touch width once the header has room for it */
-@media (min-width: 760px) {
-  .lang-btn {
-    min-width: var(--tap-target);
+.lang-selector summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Focus ring for keyboard navigation only, not after a mouse click */
+.lang-selector summary:focus {
+  outline: none;
+}
+
+.lang-selector summary:focus-visible {
+  outline: 2px solid var(--color-bg);
+  outline-offset: 2px;
+}
+
+.lang-selector summary:hover,
+.lang-selector[open] summary {
+  background-color: var(--color-overlay-light);
+}
+
+/* Flag and chevron only on the smallest phones, the language code once the header has room for it */
+.lang-selector summary span {
+  display: none;
+}
+
+@media (min-width: 400px) {
+  .lang-selector summary span {
+    display: inline;
   }
 }
 
-.lang-btn:first-child {
-    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+.lang-selector summary .fa-chevron-down {
+  font-size: var(--font-size-xs);
+  transition: rotate 0.2s ease;
 }
 
-.lang-btn:last-child {
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+.lang-selector[open] summary .fa-chevron-down {
+  rotate: 180deg;
 }
 
-.lang-btn.active {
-    background-color: var(--color-bg);
-    color: var(--color-primary);
-    border-color: var(--color-bg);
+/* The hairline keeps the white stripes of the flags distinct from any background */
+.lang-selector img {
+  display: block;
+  width: var(--flag-width);
+  height: auto;
+  border-radius: calc(var(--radius-sm) / 2);
+  box-shadow: 0 0 0 1px var(--color-overlay-light);
 }
 
-.lang-btn:hover:not(.active) {
-    background-color: var(--color-hover-light);
+.lang-selector ul {
+  position: absolute;
+  top: calc(100% + var(--space-xs));
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  /* Overrides header * centering: every option spans the full width, flags aligned */
+  align-items: stretch;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: var(--space-xs);
+  list-style: none;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-raised);
+}
+
+.lang-selector li a {
+  display: flex;
+  gap: var(--space-sm);
+  min-height: var(--tap-target);
+  padding-inline: var(--space-sm);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+/* Background instead of the default link underline */
+.lang-selector li a:hover {
+  border-color: transparent;
+  background-color: var(--color-hover-light);
+}
+
+/* No light fill on the current language: it would swallow the white stripes of its flag */
+.lang-selector a[aria-current="page"] {
+  background-color: var(--color-overlay-light);
+  border-color: var(--color-border-light);
 }
 
 footer {

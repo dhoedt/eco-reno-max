@@ -372,7 +372,7 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
     right: calc(anchor(right) + var(--space-sm));
   }
 
-  /* CSS alt text is out of reach of translation.js: follow the <html lang> it sets */
+  /* CSS alt text is out of reach of the i18n dictionaries: follow the page's <html lang> */
   .skills-carousel:lang(nl)::scroll-button(left) {
     content: '\f053' / 'Vorige dienst';
   }

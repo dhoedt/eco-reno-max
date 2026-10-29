@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang }}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ descriptionKey | t }}">
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  <link rel="alternate" hreflang="{{ page.lang }}" href="{{ site.url }}{{ page.url }}">
+  {%- for link in page.url | locale_links %}
+  <link rel="alternate" hreflang="{{ link.lang }}" href="{{ site.url }}{{ link.url }}">
+  {%- endfor %}
+  <link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ page.url | locale_url(site.defaultLanguage) }}">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  {%- if hero %}
+  <link rel="preload" as="image"
+    imagesrcset="{% for width in hero.widths %}{{ hero.image }}?w={{ width }}&fit=crop {{ width }}w{% if not loop.last %}, {% endif %}{% endfor %}"
+    imagesizes="{{ hero.sizes }}">
+  {%- endif %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Urbanist:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/{{ pageName }}.css">
+  <title>{{ titleKey | t }}</title>
+</head>
+
+<body>
+
+  <header>
+    <div class="wrapper">
+      <nav>
+        <a href="{{ '/fr/' | locale_url }}">EcoRéno Max</a>
+        {%- if pageName == "index" %}
+        <a class="cta" href="{{ '/fr/projects/' | locale_url }}">{{ "nav.projects" | t }}</a>
+        {%- endif %}
+      </nav>
+      <div id="navbar-right-side">
+        <address>
+          <a href="mailto:ecoreno.max@gmail.com" aria-label="{{ 'nav.email' | t }}">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+          </a>
+          <a href="tel:+32493044788" aria-label="{{ 'nav.phone' | t }}">
+            <i class="fa-solid fa-phone" aria-hidden="true"></i>
+            <span>+32 493 04 47 88</span>
+          </a>
+        </address>
+        <!-- JS-free dropdown: <details> opens and closes the list natively -->
+        <details class="lang-selector">
+          {%- for language in site.languages %}
+          {%- if language.code == page.lang %}
+          <summary aria-label="{{ 'nav.language' | t }} ({{ language.name }})">
+            <img src="/img/flags/{{ language.code }}.svg" width="24" height="16" alt="">
+            <span>{{ language.code | upper }}</span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </summary>
+          {%- endif %}
+          {%- endfor %}
+          <ul aria-label="{{ 'nav.language' | t }}">
+            {%- for language in site.languages %}
+            <li>
+              <a href="{{ page.url | locale_url(language.code) }}" hreflang="{{ language.code }}" lang="{{ language.code }}"
+                aria-label="{{ language.name }}"{% if language.code == page.lang %} aria-current="page"{% endif %}>
+                <img src="/img/flags/{{ language.code }}.svg" width="24" height="16" alt="">
+                {{ language.code | upper }}
+              </a>
+            </li>
+            {%- endfor %}
+          </ul>
+        </details>
+      </div>
+    </div>
+  </header>
+
+  {{ content | safe }}
+
+  <footer>
+    <p><span>Made with lots of ♥ by</span> <a href="mailto:ask@dhoedt.com">Martin D'Hoedt</a></p>
+  </footer>
+
+  <script src="/js/{{ pageScript }}.js"></script>
+</body>
+
+</html>

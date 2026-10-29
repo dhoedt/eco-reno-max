@@ -1,0 +1,22 @@
+---
+# Fallback for https://ecorenomax.be/ until nginx answers it with a 301 to /fr/
+permalink: /index.html
+eleventyExcludeFromCollections: true
+---
+<!DOCTYPE html>
+<html lang="{{ site.defaultLanguage }}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=/{{ site.defaultLanguage }}/">
+  <link rel="canonical" href="{{ site.url }}/{{ site.defaultLanguage }}/">
+  <title>EcoRéno Max</title>
+</head>
+
+<body>
+  <main>
+    <p><a href="/{{ site.defaultLanguage }}/">EcoRéno Max</a></p>
+  </main>
+</body>
+
+</html>
