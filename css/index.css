@@ -218,111 +218,180 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
   }
 }
 
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  /* Gap instead of card margins: outer cards stay aligned with the headings */
-  gap: var(--space-gutter);
+/* Skills carousel (CSS-only): swipe / scroll-snap everywhere, arrows and dots where ::scroll-button / ::scroll-marker are supported */
+:root {
+  --font-size-icon: 1.5rem;
+  /* Width of one slide, relative to the wrapper (cqi) so the track padding does not shrink it; neighbours peek in on both sides */
+  --slide-width: 80cqi;
+  --marker-size: 0.625rem;
+  /* Inactive dot diameter and width of its tap area (WCAG 2.5.8 minimum: 24px) */
+  --marker-dot-size: 0.375rem;
+  --marker-slot: 1.5rem;
 }
 
-/* 9 cards: the last one spans the full row in the 2-column layout */
-.skill-card:last-child {
-  grid-column: 1 / -1;
+@media (min-width: 560px) {
+  :root {
+    --slide-width: calc((100cqi - var(--space-gutter)) / 2);
+  }
 }
 
 @media (min-width: 760px) {
-  .skills-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .skill-card:last-child {
-    grid-column: auto;
+  :root {
+    --slide-width: calc((100cqi - 2 * var(--space-gutter)) / 3);
   }
 }
 
-.skill-card {
+/* Light breathing room before the contact section */
+#skills {
+  margin-bottom: var(--space-md);
+}
+
+/* Containing block of the arrows, and size reference for the slides */
+#skills .wrapper {
+  position: relative;
+  container-type: inline-size;
+}
+
+/* Carousel track: one row of slides, the current one snapped to the centre */
+.skills-carousel {
+  anchor-name: --skills-carousel;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--slide-width);
+  gap: var(--space-gutter);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  /* Room for the card shadows, which overflow would clip otherwise */
+  padding-block: var(--space-sm) var(--space-md);
+  /* Lets the first and last slides reach the centre too */
+  padding-inline: calc((100cqi - var(--slide-width)) / 2);
+  scroll-marker-group: after;
+}
+
+.skill-slide {
+  scroll-snap-align: center;
+  position: relative;
+  aspect-ratio: 4 / 3;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card-strong);
-  position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  padding: var(--space-md);
   color: var(--color-bg);
 }
 
-.skill-card::before {
+.skill-slide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+/* Darkens the bottom of the picture so the label stays readable */
+.skill-slide::after {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(var(--color-overlay), var(--color-overlay)), var(--card-bg);
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
+  background: linear-gradient(to bottom, var(--color-overlay-light) 40%, var(--color-overlay-dark));
 }
 
-.skill-card>* {
-  position: relative;
-  font-weight: 600;
+.skill-slide p {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-gutter);
+  font-size: var(--font-size-lead);
+  font-weight: 600;
 }
 
-.skill-card i {
-  font-size: 2rem;
+.skill-slide i {
+  font-size: var(--font-size-icon);
 }
 
-/* Per-card background images */
-.skill-card--isolation {
-  --card-bg: url('https://images.unsplash.com/photo-1670511146782-8f52c5a7bd08?w=400&h=300&fit=crop');
+.skill-slide:hover img {
+  transform: scale(1.05);
 }
 
-.skill-card--peinture {
-  --card-bg: url('https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=400&h=300&fit=crop');
-}
-
-.skill-card--argile {
-  --card-bg: url('https://images.unsplash.com/photo-1711967151478-65f508092c8a?w=400&h=300&fit=crop');
-}
-
-.skill-card--carrelage {
-  --card-bg: image-set(url('../img/skills/carrelage-sm.webp') 1x, url('../img/skills/carrelage-sm@2x.webp') 2x);
-}
-
-.skill-card--cloison {
-  --card-bg: url('https://images.unsplash.com/photo-1768839725085-829e6ac7ac26?w=400&h=300&fit=crop');
-}
-
-.skill-card--bois {
-  --card-bg: image-set(url('../img/skills/travail-du-bois-sm.webp') 1x, url('../img/skills/travail-du-bois-sm@2x.webp') 2x);
-}
-
-.skill-card--revetements {
-  --card-bg: image-set(url('../img/skills/revetements-de-sol-sm.webp') 1x, url('../img/skills/revetements-de-sol-sm@2x.webp') 2x);
-}
-
-.skill-card--ventilation {
-  --card-bg: url('https://images.unsplash.com/photo-1574334292321-4844f63aefef?w=400&h=300&fit=crop');
-}
-
-.skill-card--sanitaire {
-  --card-bg: url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&h=300&fit=crop');
-}
-
-/* Wider, shorter cards in the 3-column layout */
-@media (min-width: 760px) {
-  .skill-card--carrelage {
-    --card-bg: image-set(url('../img/skills/carrelage-lg.webp') 1x, url('../img/skills/carrelage-lg@2x.webp') 2x);
+/* Arrows and dots: browsers without ::scroll-button keep a plain swipeable row with its scrollbar */
+@supports selector(::scroll-button(*)) {
+  .skills-carousel {
+    scrollbar-width: none;
   }
 
-  .skill-card--bois {
-    --card-bg: image-set(url('../img/skills/travail-du-bois-lg.webp') 1x, url('../img/skills/travail-du-bois-lg@2x.webp') 2x);
+  .skills-carousel::scroll-button(*) {
+    position: absolute;
+    position-anchor: --skills-carousel;
+    /* Vertically centred on the slides: the track centre, shifted by half the padding-block difference */
+    top: calc(anchor(center) - (var(--space-md) - var(--space-sm)) / 2 - var(--tap-target) / 2);
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: var(--tap-target);
+    height: var(--tap-target);
+    border: none;
+    border-radius: 50%;
+    /* Dark translucent disc with a white chevron, in tune with the darkened photos */
+    background-color: var(--color-overlay);
+    color: var(--color-white);
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
   }
 
-  .skill-card--revetements {
-    --card-bg: image-set(url('../img/skills/revetements-de-sol-lg.webp') 1x, url('../img/skills/revetements-de-sol-lg@2x.webp') 2x);
+  .skills-carousel::scroll-button(*):hover,
+  .skills-carousel::scroll-button(*):focus-visible {
+    background-color: var(--color-primary);
+  }
+
+  .skills-carousel::scroll-button(*):disabled {
+    opacity: 0;
+    cursor: default;
+  }
+
+  .skills-carousel::scroll-button(left) {
+    content: '\f053' / 'Service précédent';
+    left: calc(anchor(left) + var(--space-sm));
+  }
+
+  .skills-carousel::scroll-button(right) {
+    content: '\f054' / 'Service suivant';
+    right: calc(anchor(right) + var(--space-sm));
+  }
+
+  .skills-carousel::scroll-marker-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Inactive dots stay small and narrow so the row stays compact; each still keeps a minimum tap target */
+  .skill-slide::scroll-marker {
+    content: '';
+    width: var(--marker-slot);
+    height: var(--tap-target);
+    background: radial-gradient(circle, var(--color-muted) calc(var(--marker-dot-size) / 2), transparent calc(var(--marker-dot-size) / 2 + 1px));
+    cursor: pointer;
+  }
+
+  .skill-slide::scroll-marker:target-current {
+    background: radial-gradient(circle, var(--color-primary) var(--marker-size), transparent calc(var(--marker-size) + 1px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-carousel {
+    scroll-behavior: auto;
+  }
+
+  .skill-slide img {
+    transition: none;
   }
 }
 

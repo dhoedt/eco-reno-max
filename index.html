@@ -142,47 +142,57 @@
       </div>
     </section>
 
-    <section id="skills">
+    <section id="skills" aria-labelledby="skills-heading">
       <div class="wrapper">
-        <h2 data-i18n="services.heading">Services</h2>
-        <div class="skills-grid">
-          <article class="skill-card skill-card--isolation">
-            <i class="fa-solid fa-house" aria-hidden="true"></i>
-            <span data-i18n="skill.isolation">Isolation</span>
-          </article>
-          <article class="skill-card skill-card--peinture">
-            <i class="fa-solid fa-paint-roller" aria-hidden="true"></i>
-            <span data-i18n="skill.peinture">Peinture</span>
-          </article>
-          <article class="skill-card skill-card--argile">
-            <i class="fa-solid fa-hands" aria-hidden="true"></i>
-            <span data-i18n="skill.argile">Argile</span>
-          </article>
-          <article class="skill-card skill-card--carrelage">
-            <i class="fa-solid fa-border-all" aria-hidden="true"></i>
-            <span data-i18n="skill.carrelage">Carrelage</span>
-          </article>
-          <article class="skill-card skill-card--cloison">
-            <i class="fa-solid fa-table-columns" aria-hidden="true"></i>
-            <span data-i18n="skill.cloison">Cloison</span>
-          </article>
-          <article class="skill-card skill-card--bois">
-            <i class="fa-solid fa-tree" aria-hidden="true"></i>
-            <span data-i18n="skill.bois">Travail du bois</span>
-          </article>
-          <article class="skill-card skill-card--revetements">
-            <i class="fa-solid fa-grip-lines" aria-hidden="true"></i>
-            <span data-i18n="skill.revetements">Revêtements sol</span>
-          </article>
-          <article class="skill-card skill-card--ventilation">
-            <i class="fa-solid fa-wind" aria-hidden="true"></i>
-            <span data-i18n="skill.ventilation">Ventilation</span>
-          </article>
-          <article class="skill-card skill-card--sanitaire">
-            <i class="fa-solid fa-faucet" aria-hidden="true"></i>
-            <span data-i18n="skill.sanitaire">Sanitaire</span>
-          </article>
-        </div>
+        <h2 id="skills-heading" data-i18n="services.heading">Services</h2>
+        <!-- CSS-only carousel: swipe / scroll-snap everywhere, arrows and dots where ::scroll-button / ::scroll-marker are supported -->
+        <ul class="skills-carousel" aria-label="Services">
+          <li class="skill-slide">
+            <img src="https://images.unsplash.com/photo-1670511146782-8f52c5a7bd08?w=600&h=450&fit=crop"
+              width="600" height="450" loading="lazy" alt="Panneaux isolants posés entre les chevrons d'une toiture">
+            <p><i class="fa-solid fa-house" aria-hidden="true"></i> <span data-i18n="skill.isolation">Isolation</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=600&h=450&fit=crop"
+              width="600" height="450" loading="lazy" alt="Rouleau de peinture appliquant une couche sur un mur">
+            <p><i class="fa-solid fa-paint-roller" aria-hidden="true"></i> <span data-i18n="skill.peinture">Peinture</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="https://images.unsplash.com/photo-1711967151478-65f508092c8a?w=600&h=450&fit=crop"
+              width="600" height="450" loading="lazy" alt="Mains façonnant de l'argile">
+            <p><i class="fa-solid fa-hands" aria-hidden="true"></i> <span data-i18n="skill.argile">Argile</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="img/skills/carrelage-sm.webp" srcset="img/skills/carrelage-sm.webp 1x, img/skills/carrelage-sm@2x.webp 2x"
+              loading="lazy" alt="Carrelage fraîchement posé">
+            <p><i class="fa-solid fa-border-all" aria-hidden="true"></i> <span data-i18n="skill.carrelage">Carrelage</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="https://images.unsplash.com/photo-1768839725085-829e6ac7ac26?w=600&h=450&fit=crop"
+              width="600" height="450" loading="lazy" alt="Ossature de cloison en cours de montage">
+            <p><i class="fa-solid fa-table-columns" aria-hidden="true"></i> <span data-i18n="skill.cloison">Cloison</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="img/skills/travail-du-bois-sm.webp" srcset="img/skills/travail-du-bois-sm.webp 1x, img/skills/travail-du-bois-sm@2x.webp 2x"
+              loading="lazy" alt="Pièce de bois travaillée à l'atelier">
+            <p><i class="fa-solid fa-tree" aria-hidden="true"></i> <span data-i18n="skill.bois">Travail du bois</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="img/skills/revetements-de-sol-sm.webp" srcset="img/skills/revetements-de-sol-sm.webp 1x, img/skills/revetements-de-sol-sm@2x.webp 2x"
+              loading="lazy" alt="Revêtement de sol en cours de pose">
+            <p><i class="fa-solid fa-grip-lines" aria-hidden="true"></i> <span data-i18n="skill.revetements">Revêtements sol</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="https://images.unsplash.com/photo-1574334292321-4844f63aefef?w=600&h=450&fit=crop"
+              width="600" height="450" loading="lazy" alt="Bouche de ventilation au plafond">
+            <p><i class="fa-solid fa-wind" aria-hidden="true"></i> <span data-i18n="skill.ventilation">Ventilation</span></p>
+          </li>
+          <li class="skill-slide">
+            <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&h=450&fit=crop"
+              width="600" height="450" loading="lazy" alt="Salle de bain rénovée avec lavabo et robinetterie">
+            <p><i class="fa-solid fa-faucet" aria-hidden="true"></i> <span data-i18n="skill.sanitaire">Sanitaire</span></p>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -223,6 +233,7 @@
   </footer>
 
   <script src="js/translation.js"></script>
+  <script src="js/carousel.js"></script>
 </body>
 
 </html>
