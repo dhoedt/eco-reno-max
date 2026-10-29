@@ -61,7 +61,7 @@
 }
 
 .hero-content p {
-  font-size: clamp(1rem, 5vw, 2rem);
+  font-size: var(--font-size-hero);
   text-shadow: 0 0.0625rem 0.25rem var(--color-overlay);
 }
 
@@ -71,12 +71,12 @@
   background-color: var(--color-primary);
   color: var(--color-bg);
   border: 2px solid var(--color-bg);
-  border-radius: 2rem;
+  border-radius: var(--radius-pill);
   font-weight: 600;
   letter-spacing: 0.06rem;
   text-decoration: none;
   text-transform: uppercase;
-  font-size: clamp(1rem, 0.75rem + 0.5vw, 1.25rem);
+  font-size: var(--font-size-cta);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -228,7 +228,6 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
 
 /* Skills carousel (CSS-only): swipe / scroll-snap everywhere, arrows and dots where ::scroll-button / ::scroll-marker are supported */
 :root {
-  --font-size-icon: 1.5rem;
   /* Width of one slide, relative to the wrapper (cqi) so the track padding does not shrink it; neighbours peek in on both sides */
   --slide-width: 80cqi;
   --marker-size: 0.625rem;
@@ -347,7 +346,7 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
     /* Dark translucent disc with a white chevron, in tune with the darkened photos */
     background-color: var(--color-overlay);
     color: var(--color-white);
-    font-family: 'Font Awesome 6 Free';
+    font-family: var(--font-icon);
     font-weight: 900;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
@@ -426,7 +425,7 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
   min-height: var(--tap-target);
   font-size: var(--font-size-lead);
   i {
-    margin-inline-end: .5rem;
+    margin-inline-end: var(--space-sm);
   }
 }
 

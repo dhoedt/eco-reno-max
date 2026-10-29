@@ -18,11 +18,19 @@
   --shadow-raised: 0 0.125rem 0.5rem var(--color-shadow-strong);
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
+  --radius-pill: 2rem;
   --tap-target: 2.75rem;
   --font-heading: 'Fraunces', Georgia, serif;
   --font-base: 'Urbanist', system-ui, sans-serif;
+  --font-icon: 'Font Awesome 6 Free';
+  --font-size-xs: 0.75rem;
   --font-size-small: .8rem;
+  --font-size-base: 1rem;
+  --font-size-title: 1.25rem;
+  --font-size-icon: 1.5rem;
   --font-size-lead: clamp(1rem, 0.9rem + 0.4vw, 1.3rem);
+  --font-size-cta: clamp(1rem, 0.75rem + 0.5vw, 1.25rem);
+  --font-size-hero: clamp(1rem, 5vw, 2rem);
   --space-xs: 0.2rem;
   --space-sm: 0.5rem;
   --space-gutter: 1rem;
@@ -146,7 +154,7 @@ header .wrapper {
 
 @media (min-width: 400px) {
   header .wrapper {
-    font-size: 1rem;
+    font-size: var(--font-size-base);
   }
 }
 
@@ -237,13 +245,6 @@ header address a>span {
 .lang-selector {
     display: flex !important;
     border-bottom: none !important;
-}
-
-.lang-buttons {
-    display: flex;
-    width: 100%;
-    padding: 0.75rem 2rem;
-    gap: 0;
 }
 
 .lang-btn {
