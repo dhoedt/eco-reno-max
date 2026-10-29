@@ -49,11 +49,17 @@
   object-fit: cover;
 }
 
+/* "Before" on the left, "after" revealed on the right of the handle, matching the labels */
 .comparison-after {
   position: absolute;
   inset: 0;
-  height: 100%;
-  clip-path: inset(0 calc(100% - var(--split)) 0 0);
+  clip-path: inset(0 0 0 var(--split));
+}
+
+/* The range input is invisible: show keyboard focus on the whole component instead */
+.comparison:has(.comparison-range:focus-visible) {
+  outline: 0.2rem solid var(--color-primary);
+  outline-offset: -0.2rem;
 }
 
 .comparison-handle {

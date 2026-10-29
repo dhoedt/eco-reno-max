@@ -373,6 +373,15 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
     right: calc(anchor(right) + var(--space-sm));
   }
 
+  /* CSS alt text is out of reach of translation.js: follow the <html lang> it sets */
+  .skills-carousel:lang(nl)::scroll-button(left) {
+    content: '\f053' / 'Vorige dienst';
+  }
+
+  .skills-carousel:lang(nl)::scroll-button(right) {
+    content: '\f054' / 'Volgende dienst';
+  }
+
   .skills-carousel::scroll-marker-group {
     display: flex;
     justify-content: center;

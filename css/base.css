@@ -116,8 +116,9 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  border-bottom: .1rem solid var(--color-bg);
+/* Underline in the link's own colour so it shows on every background; buttons keep their border */
+a:not(.cta):hover {
+  border-bottom: .1rem solid currentColor;
 }
 
 /* Layout */
