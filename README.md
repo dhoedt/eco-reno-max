@@ -24,8 +24,9 @@ _includes/layouts/
   home.njk, projects.njk page bodies, written once for all languages
 fr/, nl/                 one stub per page, only picks its layout
 index.njk                root fallback redirecting / to /fr/
-eleventy.config.js       i18n plugin, `t` filter, copied assets
-css/, js/, img/          copied as-is (img/src originals excluded)
+eleventy.config.js       i18n plugin, `t` filter, `croppedPicture` shortcode, copied assets
+css/, js/, img/          copied as-is, except img/src
+img/src/                 full-size project photos, processed at build time (not copied)
 ```
 
 ## Translations
@@ -42,6 +43,14 @@ To add a text:
 Internal links go through `locale_url` so they stay in the current language: `{{ '/fr/projects/' | locale_url }}`.
 
 To add a page, create its layout in `_includes/layouts/` (chained to `layouts/base.njk`) and a stub per language in `fr/` and `nl/`.
+
+## Project images
+
+`{% croppedPicture %}` (in `eleventy.config.js`, via [@11ty/eleventy-img](https://www.11ty.dev/docs/plugins/image/)) turns an original from `img/src/` into a `<picture>`:
+center-cropped to 16:9, at 400, 800 and 1200px wide, in webp with a jpeg fallback, written to `_site/img/projects/`.
+
+To add a project, drop its `<name>-before.jpg` and `<name>-after.jpg` originals in `img/src/` and add an entry to `projects` in `_includes/layouts/projects.njk`.
+Outputs already present in `_site/img/projects/` are not re-encoded. Their file names change with the source file and the quality settings, but not with the crop: clear that folder after changing the crop.
 
 ## Language switcher
 

@@ -1,10 +1,5 @@
-.venv
 .playwright*
 .claude/settings.local.json
 sandbox/**
-img/400
-img/800
-img/1200
-img/__pycache__/
 node_modules/
 _site/
