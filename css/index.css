@@ -136,10 +136,18 @@
   align-self: stretch;
 }
 
-/* Mobile: a third of the section width; from 760px: a third of its half, i.e. a sixth */
+/* Mobile: a third of the section width, capped so wide phones/small tablets
+   don't get a huge outline; from 760px: a third of its half, i.e. a sixth */
 .house {
   display: block;
   width: 33%;
+  max-width: 8rem;
+}
+
+@media (min-width: 760px) {
+  .house {
+    max-width: none;
+  }
 }
 
 /* The fill set on each <use> is inherited by its polygon in img/house.svg */
