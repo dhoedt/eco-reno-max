@@ -16,7 +16,7 @@ Every push on `master` runs the e2e tests (`.github/workflows/e2e.yml`); when th
 It can also be started by hand from the Actions tab (*Deploy* → *Run workflow*).
 
 `scripts/deploy.sh` builds the latest `master` on the server and publishes it atomically.
-It stops at the first error, and a failed build leaves the live site untouched. Layout under `DEPLOY_ROOT` (default `/srv/ecoreno`):
+It stops at the first error, and a failed build leaves the live site untouched. Layout under `DEPLOY_ROOT` (default `/var/www/ecorenomax`):
 
 ```
 repo/                   git checkout of master; keeps node_modules/ and .cache/ (remote images, downloaded once)
@@ -29,14 +29,14 @@ The checkout is reset to `origin/master`: never edit files in `repo/` on the ser
 
 One-time server setup:
 
-1. clone the repository into `/srv/ecoreno/repo` (another location: set `DEPLOY_ROOT` in the forced command);
+1. clone the repository into `/var/www/ecorenomax/repo` (another location: set `DEPLOY_ROOT` in the forced command);
 2. restrict the CI key to the script in the deploy user's `~/.ssh/authorized_keys`:
-   `command="/srv/ecoreno/repo/scripts/deploy.sh",restrict ssh-ed25519 AAAA...`
-3. point the web server's document root at `/srv/ecoreno/current`, readable by the web server user (`releases/` included).
+   `command="/var/www/ecorenomax/repo/scripts/deploy.sh",restrict ssh-ed25519 AAAA...`
+3. point the web server's document root at `/var/www/ecorenomax/current`, readable by the web server user (`releases/` included).
 
 GitHub secrets: `DEPLOY_SSH_KEY` (private key), `DEPLOY_KNOWN_HOSTS` (output of `ssh-keyscan -p <port> <host>`), `DEPLOY_USER`, `DEPLOY_HOST`, `DEPLOY_PORT` (optional, default 22).
 
-To roll back, point `current` at a previous release: `ln -sfn /srv/ecoreno/releases/<release> /srv/ecoreno/current`.
+To roll back, point `current` at a previous release: `ln -sfn /var/www/ecorenomax/releases/<release> /var/www/ecorenomax/current`.
 
 ## Folder layout
 
@@ -53,7 +53,7 @@ _includes/partials/
   contact-link.njk       contactLink macro: email / phone link from site.contact
 fr/, nl/                 one stub per page, only picks its layout
 index.njk                root fallback redirecting / to /fr/
-eleventy.config.js       i18n plugin, `t` filter, `picture` / `preloadPicture` shortcodes, copied assets
+eleventy.config.js       i18n plugin, `t` filter, `asset_url` filter, `picture` / `preloadPicture` shortcodes, copied assets
 scripts/deploy.sh        server-side build and atomic publish, run by the Deploy workflow
 css/, js/, img/          copied as-is, except img/src
 img/src/                 full-size photos (projects, skills/), processed at build time (not copied)
@@ -96,10 +96,69 @@ The email, phone and VAT number are in `site.contact` (`_data/site.json`); the h
 
 Flags are `img/flags/<language code>.svg`; replace the files to change their design.
 
+## Cache busting
+
+Local CSS, JS and images are linked through the `asset_url` filter, which appends a hash of the file's content: `{{ '/css/base.css' | asset_url }}` renders `/css/base.css?v=<hash>`.
+The URL changes only when the file does, so the server can cache these files for a year. A fragment is kept: `/img/house.svg?v=<hash>#segment`; a missing file fails the build.
+Images rendered by `picture` already have a content hash in their file name.
+
+Always link files from `css/`, `js/` and `img/` through `asset_url`: the server caches them for a year, so a link without the version could serve a stale file.
+
 ## Server
 
-`/` should redirect to `/fr/`. The generated `_site/index.html` does it with a meta refresh; on nginx, prefer:
+nginx serves the deploy's `current` symlink. Its security headers are in a snippet, `/etc/nginx/snippets/ecorenomax-headers.conf`:
 
 ```nginx
-location = / { return 301 /fr/; }
+add_header X-Frame-Options "SAMEORIGIN" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 ```
+
+A `location` with its own `add_header` drops every `add_header` of the `server` block, so the snippet is included at both levels.
+Main site, in `/etc/nginx/sites-available/` (the HTTP -> HTTPS and www redirects are unchanged):
+
+```nginx
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    server_name ecorenomax.be;
+
+    ssl_certificate /etc/letsencrypt/live/ecorenomax.be/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ecorenomax.be/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    root /var/www/ecorenomax/current;
+    index index.html;
+
+    include snippets/ecorenomax-headers.conf;
+
+    # Hidden files; first regex location, so it wins over the assets one
+    location ~ /\. {
+        deny all;
+    }
+
+    # The generated _site/index.html also redirects, with a meta refresh
+    location = / {
+        return 301 /fr/;
+    }
+
+    # HTML: revalidated on every visit, so a deploy shows at once and pages point to the new asset URLs
+    location / {
+        include snippets/ecorenomax-headers.conf;
+        add_header Cache-Control "no-cache";
+        try_files $uri $uri/ =404;
+    }
+
+    # CSS, JS and images: versioned by asset_url (?v=<hash>) or named with a hash by eleventy-img
+    location ~* ^/(css|js|img)/ {
+        include snippets/ecorenomax-headers.conf;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        try_files $uri =404;
+    }
+}
+```
+
+With `open_file_cache` enabled, nginx may serve the previous release for up to `open_file_cache_valid` (60s by default) after the `current` symlink changes.

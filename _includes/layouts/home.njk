@@ -18,7 +18,7 @@ skillImageSizes: "(min-width: 1011px) 20rem, (min-width: 760px) 31vw, (min-width
 <section class="hero">
     {% picture hero.image, "", hero.options %}
     <div class="hero-content">
-      <h1><img src="/img/logo.svg" width="1411" height="216" alt="{{ 'hero.logo-alt' | translate }}"></h1>
+      <h1><img src="{{ '/img/logo.svg' | asset_url }}" width="1411" height="216" alt="{{ 'hero.logo-alt' | translate }}"></h1>
       <p>{{ "hero.tagline" | translate }}</p>
       <a href="{{ '/fr/projects/' | locale_url }}" class="cta">{{ "hero.cta" | translate }}</a>
     </div>
@@ -46,7 +46,7 @@ skillImageSizes: "(min-width: 1011px) 20rem, (min-width: 760px) 31vw, (min-width
           <!-- Segments come from img/house.svg; the viewBox must match that file's -->
           <svg class="house" viewBox="126 -1 185 214" xmlns="http://www.w3.org/2000/svg">
             {%- for segment in range(1, 6) %}
-            <use class="house-segment" data-segment="{{ segment }}" href="/img/house.svg#house-segment-{{ segment }}" />
+            <use class="house-segment" data-segment="{{ segment }}" href="{{ ('/img/house.svg#house-segment-' + segment) | asset_url }}" />
             {%- endfor %}
           </svg>
         </figure>

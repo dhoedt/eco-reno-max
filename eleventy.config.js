@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import fs from "node:fs";
 import path from "node:path";
 import { I18nPlugin } from "@11ty/eleventy";
 import Image from "@11ty/eleventy-img";
@@ -19,6 +21,17 @@ export default function (eleventyConfig) {
     if (key in dictionary) return dictionary[key];
     if (key in commonDictionary) return commonDictionary[key];
     throw new Error(`Missing translation key "${key}" in _data/i18n/${language}.json and _data/i18n/common.json`);
+  });
+
+  // Cache busting for passthrough-copied assets: appends a hash of the file's content, so its URL only changes with it
+  // and the server can cache it forever. "/img/house.svg#segment" -> "/img/house.svg?v=<hash>#segment".
+  // Hashed on every call (not memoized) so `npm start` picks up edited files; a missing file fails the build.
+  eleventyConfig.addFilter("asset_url", function (url) {
+    const [assetPath, fragment] = url.split("#");
+    const sourceFile = path.join(eleventyConfig.directories.input, assetPath);
+    if (!fs.existsSync(sourceFile)) throw new Error(`asset_url: no file ${sourceFile} for "${url}"`);
+    const hash = createHash("sha256").update(fs.readFileSync(sourceFile)).digest("hex").slice(0, 10);
+    return `${assetPath}?v=${hash}${fragment === undefined ? "" : `#${fragment}`}`;
   });
 
   // Resizes an image to every width, in webp + jpeg. source: a file in img/src, or a remote URL (Unsplash placeholders),

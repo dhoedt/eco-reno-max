@@ -8,7 +8,7 @@
 #   current                 symlink to the live release: the web server's document root
 set -euo pipefail
 
-DEPLOY_ROOT="${DEPLOY_ROOT:-/srv/ecoreno}"
+DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/ecorenomax}"
 BRANCH=master
 KEEP_RELEASES=5
 
