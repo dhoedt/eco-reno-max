@@ -4,7 +4,7 @@ pageName: projects
 pageScript: comparison
 titleKey: meta.projects.title
 descriptionKey: meta.projects.description
-# image: base name of the img/src/<image>-before|after.jpg originals; swapped: the "after" photo sits in the left slot
+# image: base name of the img/src/<image>-before|after.jpg originals; swapped: the "after" photo (and its label) sits on the left
 projects:
   - { number: 1, image: floor, swapped: false, lazy: false }
   - { number: 2, image: stairs, swapped: true, lazy: false }
@@ -22,20 +22,22 @@ imageSizes: "(min-width: 1011px) 36rem, (min-width: 760px) 57vw, 95vw"
         {%- set states = ["after", "before"] if project.swapped else ["before", "after"] %}
         <article class="project">
           <div class="comparison">
-            {%- for slot in ["before", "after"] %}
+            {%- for slot in ["left", "right"] %}
             {%- set state = states[loop.index0] %}
             {% picture project.image ~ "-" ~ state ~ ".jpg", ("project" ~ project.number ~ "." ~ state) | translate, { folder: "projects", ratio: [16, 9], class: "comparison-" ~ slot, sizes: imageSizes, lazy: project.lazy } %}
             {%- endfor %}
-            <div class="comparison-handle">
+            <div class="comparison-handle" aria-hidden="true">
               <div class="comparison-handle-btn">&#8592; &#8594;</div>
             </div>
-            <span class="comparison-label comparison-label--before">{{ "projects.label-before" | translate }}</span>
-            <span class="comparison-label comparison-label--after">{{ "projects.label-after" | translate }}</span>
+            {#- Each label follows its photo, whichever side it is on #}
+            {%- for slot in ["left", "right"] %}
+            <span class="comparison-label comparison-label--{{ slot }}">{{ ("projects.label-" ~ states[loop.index0]) | translate }}</span>
+            {%- endfor %}
             <input class="comparison-range" type="range" min="0" max="100" value="50"
               aria-label="{{ 'projects.compare' | translate }}">
           </div>
           <div class="project-body">
-            <h3>{{ ("project" ~ project.number ~ ".title") | translate }}</h3>
+            <h2>{{ ("project" ~ project.number ~ ".title") | translate }}</h2>
             <p>{{ ("project" ~ project.number ~ ".desc") | translate }}</p>
           </div>
         </article>

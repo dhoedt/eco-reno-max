@@ -1,3 +1,20 @@
+/* Self-hosted variable fonts, copied from @fontsource-variable by eleventy.config.js (latin subset) */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/fraunces-latin-opsz-normal.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/urbanist-latin-wght-normal.woff2') format('woff2-variations');
+}
+
 :root {
   --color-primary: #2d6a4f;
   --color-bg: #f9f9f7;
@@ -23,7 +40,6 @@
   --flag-width: 1.75rem;
   --font-heading: 'Fraunces', Georgia, serif;
   --font-base: 'Urbanist', system-ui, sans-serif;
-  --font-icon: 'Font Awesome 6 Free';
   --font-size-xs: 0.75rem;
   --font-size-small: .8rem;
   --font-size-base: 1rem;
@@ -93,7 +109,7 @@ h3 {
 }
 
 /* Section titles; a page title in <main> (outside the hero) looks the same */
-main h1,
+main h1:not(.hero h1),
 h2 {
   font-size: var(--font-size-heading);
   margin-bottom: var(--margin-title);
@@ -102,7 +118,7 @@ h2 {
   gap: var(--space-sm);
 }
 
-main h1::after,
+main h1:not(.hero h1)::after,
 h2::after {
   content: '';
   display: block;
@@ -123,6 +139,26 @@ section {
 img {
   display: block;
   max-width: 100%;
+}
+
+/* Inline SVG icons from the icon shortcode: sized and coloured like the text around them */
+.icon {
+  display: inline-block;
+  height: 1em;
+  width: auto;
+  overflow: visible;
+  vertical-align: -0.125em;
+  fill: currentColor;
+}
+
+/* Read by screen readers, not shown */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 a {
@@ -295,12 +331,12 @@ header address a>span {
   }
 }
 
-.lang-selector summary .fa-chevron-down {
+.lang-selector summary .icon {
   font-size: var(--font-size-xs);
   transition: rotate 0.2s ease;
 }
 
-.lang-selector[open] summary .fa-chevron-down {
+.lang-selector[open] summary .icon {
   rotate: 180deg;
 }
 

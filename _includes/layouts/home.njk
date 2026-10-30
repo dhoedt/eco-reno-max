@@ -15,16 +15,16 @@ hero:
 skillImageSizes: "(min-width: 1011px) 20rem, (min-width: 760px) 31vw, (min-width: 560px) 47vw, 76vw"
 ---
 {%- from "partials/contact-link.njk" import contactLink with context %}
-<section class="hero">
-    {% picture hero.image, "", hero.options %}
-    <div class="hero-content">
-      <h1><img src="{{ '/img/logo.svg' | asset_url }}" width="1411" height="216" alt="{{ 'hero.logo-alt' | translate }}"></h1>
-      <p>{{ "hero.tagline" | translate }}</p>
-      <a href="{{ '/fr/projects/' | locale_url }}" class="cta">{{ "hero.cta" | translate }}</a>
-    </div>
-  </section>
-
   <main>
+    <section class="hero">
+      {% picture hero.image, "", hero.options %}
+      <div class="hero-content">
+        <h1><img src="{{ '/img/logo.svg' | asset_url }}" width="1411" height="216" alt="{{ 'hero.logo-alt' | translate }}"></h1>
+        <p>{{ "hero.tagline" | translate }}</p>
+        <a href="{{ '/fr/projects/' | locale_url }}" class="cta">{{ "hero.cta" | translate }}</a>
+      </div>
+    </section>
+
     <section id="about">
       <div class="wrapper">
         <h2>{{ "about.heading" | translate }}</h2>
@@ -40,7 +40,8 @@ skillImageSizes: "(min-width: 1011px) 20rem, (min-width: 760px) 31vw, (min-width
       </div>
     </section>
 
-    <section id="house">
+    <section id="house" aria-labelledby="house-heading">
+      <h2 id="house-heading" class="visually-hidden">{{ "house.heading" | translate }}</h2>
       <div class="wrapper house-layout">
         <figure class="house-figure">
           <!-- Segments come from img/house.svg; the viewBox must match that file's -->
@@ -71,7 +72,7 @@ skillImageSizes: "(min-width: 1011px) 20rem, (min-width: 760px) 31vw, (min-width
           {%- for skill in skills %}
           <li class="skill-slide">
             {% picture skill.image, ("skill." ~ skill.id ~ "-alt") | translate, { folder: "skills", widths: [400, 600, 800], ratio: [4, 3], sizes: skillImageSizes, lazy: true } %}
-            <p><i class="fa-solid {{ skill.icon }}" aria-hidden="true"></i> <span>{{ ("skill." ~ skill.id) | translate }}</span></p>
+            <p>{% icon skill.icon %} <span>{{ ("skill." ~ skill.id) | translate }}</span></p>
           </li>
           {%- endfor %}
         </ul>
@@ -90,11 +91,11 @@ skillImageSizes: "(min-width: 1011px) 20rem, (min-width: 760px) 31vw, (min-width
               {{ contactLink(site.contact.phone) }}
             </li>
             <li>
-              <i class="fa-solid fa-map" aria-hidden="true"></i>
+              {% icon "fa-map" %}
               <span>{{ "contact.location" | translate }}</span>
             </li>
             <li>
-              <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+              {% icon "fa-building-columns" %}
               {{ site.contact.vat }}
             </li>
           </ul>

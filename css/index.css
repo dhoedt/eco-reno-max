@@ -1,5 +1,11 @@
 /* Hero */
+/* The hero opens <main> flush under the header: main's top padding goes below it instead */
+main:has(> .hero) {
+  padding-top: 0;
+}
+
 .hero {
+  margin-bottom: var(--main-padding);
   position: relative;
   height: clamp(20rem, 50vh, 25rem);
   overflow: hidden;
@@ -206,13 +212,25 @@
   2%, 18%       { opacity: 1; }
 }
 
-/* Stop the cycle once the visitor interacts, and follow the hovered segment instead */
+/* Hovering the outline pauses the cycle where it is; it resumes from there once the pointer leaves */
 body:has(.house:hover) :is(.house-segment, .house-text) {
-  animation: none;
+  animation-play-state: paused;
 }
 
-.house-segment:hover {
-  fill: var(--color-primary);
+/* A hovered segment takes the spotlight from the paused one.
+   !important: even paused, an animation overrides normal declarations */
+body:has(.house-segment:hover) .house-segment {
+  fill: var(--color-text) !important;
+}
+
+body:has(.house-segment:hover) .house-segment:hover {
+  fill: var(--color-primary) !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body:has(.house-segment:hover) .house-text {
+    opacity: 0 !important;
+  }
 }
 
 body:has(.house-segment[data-segment="1"]:hover) .house-text[data-segment="1"],
@@ -220,13 +238,24 @@ body:has(.house-segment[data-segment="2"]:hover) .house-text[data-segment="2"],
 body:has(.house-segment[data-segment="3"]:hover) .house-text[data-segment="3"],
 body:has(.house-segment[data-segment="4"]:hover) .house-text[data-segment="4"],
 body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
-  opacity: 1;
+  opacity: 1 !important;
 }
 
+/* No cycle to reveal the texts one by one: all of them are listed, one below the other */
 @media (prefers-reduced-motion: reduce) {
   .house-segment,
   .house-text {
     animation: none;
+  }
+
+  .house-texts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .house-text {
+    opacity: 1;
   }
 }
 
@@ -321,7 +350,7 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
   font-weight: 600;
 }
 
-.skill-slide i {
+.skill-slide .icon {
   font-size: var(--font-size-icon);
 }
 
@@ -350,8 +379,9 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
     /* Dark translucent disc with a white chevron, in tune with the darkened photos */
     background-color: var(--color-overlay);
     color: var(--color-white);
-    font-family: var(--font-icon);
-    font-weight: 900;
+    font-size: var(--font-size-icon);
+    font-weight: 600;
+    line-height: 1;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
   }
@@ -367,22 +397,22 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
   }
 
   .skills-carousel::scroll-button(left) {
-    content: '\f053' / 'Service précédent';
+    content: '‹' / 'Service précédent';
     left: calc(anchor(left) + var(--space-sm));
   }
 
   .skills-carousel::scroll-button(right) {
-    content: '\f054' / 'Service suivant';
+    content: '›' / 'Service suivant';
     right: calc(anchor(right) + var(--space-sm));
   }
 
   /* CSS alt text is out of reach of the i18n dictionaries: follow the page's <html lang> */
   .skills-carousel:lang(nl)::scroll-button(left) {
-    content: '\f053' / 'Vorige dienst';
+    content: '‹' / 'Vorige dienst';
   }
 
   .skills-carousel:lang(nl)::scroll-button(right) {
-    content: '\f054' / 'Volgende dienst';
+    content: '›' / 'Volgende dienst';
   }
 
   .skills-carousel::scroll-marker-group {
@@ -428,7 +458,7 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
   align-items: center;
   min-height: var(--tap-target);
   font-size: var(--font-size-lead);
-  i {
+  .icon {
     margin-inline-end: var(--space-sm);
   }
 }

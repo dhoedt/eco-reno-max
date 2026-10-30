@@ -58,7 +58,7 @@ for (const { name, url, language } of pages) {
       await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /\S/);
     });
 
-    // Only the site's own files: an outage of the font CDNs (Google Fonts, cdnjs) must not fail the test
+    // Only the site's own files (fonts and icons included): an outage of a third-party site must not fail the test
     test("has no console errors and no failed local requests", async ({ page, baseURL }) => {
       const problems = [];
       page.on("console", (message) => {

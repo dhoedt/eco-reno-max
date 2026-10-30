@@ -6,7 +6,13 @@ on:
     workflows: [e2e tests]
     types: [completed]
     branches: [master]
+  # Manual deploy, just in case: a given commit of master (e.g. a rollback), or the latest master untested
   workflow_dispatch:
+    inputs:
+      commit:
+        description: Commit of master to deploy (full or short SHA); empty for the latest master
+        required: false
+        default: ""
 
 permissions: {}
 
@@ -22,10 +28,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      # The server restricts this key to running scripts/deploy.sh (forced command in authorized_keys),
-      # which builds and publishes the latest master, so no remote command is passed here.
+      # The server restricts this key to running scripts/deploy.sh (forced command in authorized_keys). The "command"
+      # sent is only the commit to build, which the script reads from SSH_ORIGINAL_COMMAND: the one whose tests passed,
+      # not whatever master has become since.
       - name: Run the deploy script on the server
         env:
+          COMMIT: ${{ github.event.workflow_run.head_sha || inputs.commit }}
           SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
           KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
           DEPLOY_TARGET: ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}
@@ -37,4 +45,4 @@ jobs:
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
           ssh -T -i ~/.ssh/deploy_key -p "${DEPLOY_PORT:-22}" \
             -o StrictHostKeyChecking=yes -o BatchMode=yes -o ServerAliveInterval=30 \
-            "$DEPLOY_TARGET"
+            "$DEPLOY_TARGET" ${COMMIT:+"$COMMIT"}

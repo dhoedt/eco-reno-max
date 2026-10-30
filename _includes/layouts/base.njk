@@ -16,12 +16,9 @@
   {%- if hero %}
   {% preloadPicture hero.image, hero.options %}
   {%- endif %}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Urbanist:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <!-- Same URLs as the @font-face rules of base.css, so the preloaded files are reused -->
+  <link rel="preload" href="/fonts/urbanist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ '/css/base.css' | asset_url }}">
   <link rel="stylesheet" href="{{ ('/css/' + pageName + '.css') | asset_url }}">
   <title>{{ titleKey | translate }}</title>
@@ -46,10 +43,10 @@
         <details class="lang-selector">
           {%- for language in site.languages %}
           {%- if language.code == page.lang %}
-          <summary aria-label="{{ 'nav.language' | translate }} ({{ language.name }})">
+          <summary aria-label="{{ language.code | upper }} – {{ 'nav.language' | translate }}">
             <img src="{{ ('/img/flags/' + language.code + '.svg') | asset_url }}" width="24" height="16" alt="">
             <span>{{ language.code | upper }}</span>
-            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            {% icon "fa-chevron-down" %}
           </summary>
           {%- endif %}
           {%- endfor %}
@@ -57,7 +54,7 @@
             {%- for language in site.languages %}
             <li>
               <a href="{{ page.url | locale_url(language.code) }}" hreflang="{{ language.code }}" lang="{{ language.code }}"
-                aria-label="{{ language.name }}"{% if language.code == page.lang %} aria-current="page"{% endif %}>
+                aria-label="{{ language.code | upper }} – {{ language.name }}"{% if language.code == page.lang %} aria-current="page"{% endif %}>
                 <img src="{{ ('/img/flags/' + language.code + '.svg') | asset_url }}" width="24" height="16" alt="">
                 {{ language.code | upper }}
               </a>

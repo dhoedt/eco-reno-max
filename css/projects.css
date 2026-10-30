@@ -36,8 +36,8 @@
   user-select: none;
 }
 
-.comparison-before,
-.comparison-after {
+.comparison-left,
+.comparison-right {
   display: block;
   width: 100%;
   height: 100%;
@@ -49,8 +49,8 @@
   object-fit: cover;
 }
 
-/* "Before" on the left, "after" revealed on the right of the handle, matching the labels */
-.comparison-after {
+/* The right photo is revealed on the right of the handle; each label sits on its photo's side */
+.comparison-right {
   position: absolute;
   inset: 0;
   clip-path: inset(0 0 0 var(--split));
@@ -106,11 +106,11 @@
   pointer-events: none;
 }
 
-.comparison-label--before {
+.comparison-label--left {
   left: var(--space-sm);
 }
 
-.comparison-label--after {
+.comparison-label--right {
   right: var(--space-sm);
 }
 
@@ -132,9 +132,16 @@
   flex: 1;
 }
 
-.project-body h3 {
+/* A card title, not a section title: no underline or section spacing */
+.project-body h2 {
+  display: block;
+  margin-bottom: 0;
   font-size: var(--font-size-title);
   color: var(--color-text);
+}
+
+.project-body h2::after {
+  content: none;
 }
 
 .project-body p {
