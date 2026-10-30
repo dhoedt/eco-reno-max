@@ -1,0 +1,12 @@
+{#- Import with context, so the translate filter knows the page language:
+    {% from "partials/contact-link.njk" import contactLink with context %} -#}
+
+{#- One link to a site.contact channel (email, phone); showValue prints the address or number next to the icon -#}
+{% macro contactLink(channel, showValue = true) -%}
+<a href="{{ channel.href }}" aria-label="{{ channel.labelKey | translate }}">
+  <i class="fa-solid {{ channel.icon }}" aria-hidden="true"></i>
+  {%- if showValue %}
+  <span>{{ channel.display }}</span>
+  {%- endif %}
+</a>
+{%- endmacro %}

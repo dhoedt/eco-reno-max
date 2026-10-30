@@ -53,8 +53,12 @@
   z-index: 2;
 }
 
-.hero-content img {
+.hero-content h1 {
   width: clamp(15rem, 85%, 45rem);
+}
+
+.hero-content img {
+  width: 100%;
   height: auto;
   /* text-shadow does not apply to images: drop-shadow follows the SVG shape */
   filter: drop-shadow(0 0.125rem 0.75rem var(--color-shadow-strong));

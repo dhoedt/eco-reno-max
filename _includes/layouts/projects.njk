@@ -17,26 +17,26 @@ imageSizes: "(min-width: 1011px) 36rem, (min-width: 760px) 57vw, 95vw"
 <main>
     <section id="projects">
       <div class="wrapper">
-        <h2>{{ "projects.heading" | t }}</h2>
+        <h1>{{ "projects.heading" | translate }}</h1>
         {%- for project in projects %}
         {%- set states = ["after", "before"] if project.swapped else ["before", "after"] %}
         <article class="project">
           <div class="comparison">
             {%- for slot in ["before", "after"] %}
             {%- set state = states[loop.index0] %}
-            {% croppedPicture project.image ~ "-" ~ state ~ ".jpg", ("project" ~ project.number ~ "." ~ state) | t, "comparison-" ~ slot, imageSizes, project.lazy %}
+            {% picture project.image ~ "-" ~ state ~ ".jpg", ("project" ~ project.number ~ "." ~ state) | translate, { folder: "projects", ratio: [16, 9], class: "comparison-" ~ slot, sizes: imageSizes, lazy: project.lazy } %}
             {%- endfor %}
             <div class="comparison-handle">
               <div class="comparison-handle-btn">&#8592; &#8594;</div>
             </div>
-            <span class="comparison-label comparison-label--before">{{ "projects.label-before" | t }}</span>
-            <span class="comparison-label comparison-label--after">{{ "projects.label-after" | t }}</span>
+            <span class="comparison-label comparison-label--before">{{ "projects.label-before" | translate }}</span>
+            <span class="comparison-label comparison-label--after">{{ "projects.label-after" | translate }}</span>
             <input class="comparison-range" type="range" min="0" max="100" value="50"
-              aria-label="{{ 'projects.compare' | t }}">
+              aria-label="{{ 'projects.compare' | translate }}">
           </div>
           <div class="project-body">
-            <h3>{{ ("project" ~ project.number ~ ".title") | t }}</h3>
-            <p>{{ ("project" ~ project.number ~ ".desc") | t }}</p>
+            <h3>{{ ("project" ~ project.number ~ ".title") | translate }}</h3>
+            <p>{{ ("project" ~ project.number ~ ".desc") | translate }}</p>
           </div>
         </article>
         {%- endfor %}

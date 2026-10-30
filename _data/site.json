@@ -4,5 +4,10 @@
   "languages": [
     { "code": "fr", "name": "Français" },
     { "code": "nl", "name": "Nederlands" }
-  ]
+  ],
+  "contact": {
+    "email": { "href": "mailto:ecoreno.max@gmail.com", "display": "ecoreno.max@gmail.com", "icon": "fa-envelope", "labelKey": "nav.email" },
+    "phone": { "href": "tel:+32493044788", "display": "+32 493 04 47 88", "icon": "fa-phone", "labelKey": "nav.phone" },
+    "vat": "BE 1022 762 951"
+  }
 }

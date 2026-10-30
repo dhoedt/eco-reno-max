@@ -1,0 +1,11 @@
+[
+  { "id": "isolation", "icon": "fa-house", "image": "https://images.unsplash.com/photo-1670511146782-8f52c5a7bd08?w=1200" },
+  { "id": "peinture", "icon": "fa-paint-roller", "image": "https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=1200" },
+  { "id": "argile", "icon": "fa-hands", "image": "https://images.unsplash.com/photo-1711967151478-65f508092c8a?w=1200" },
+  { "id": "carrelage", "icon": "fa-border-all", "image": "skills/carrelage.webp" },
+  { "id": "cloison", "icon": "fa-table-columns", "image": "https://images.unsplash.com/photo-1768839725085-829e6ac7ac26?w=1200" },
+  { "id": "bois", "icon": "fa-tree", "image": "skills/travail-du-bois.webp" },
+  { "id": "revetements", "icon": "fa-grip-lines", "image": "skills/revetements-de-sol.webp" },
+  { "id": "ventilation", "icon": "fa-wind", "image": "https://images.unsplash.com/photo-1574334292321-4844f63aefef?w=1200" },
+  { "id": "sanitaire", "icon": "fa-faucet", "image": "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200" }
+]

@@ -16,17 +16,20 @@ Deploy the content of `_site/`.
 
 ```
 _data/
-  site.json              site url, default language, language list (switcher order)
+  site.json              site url, default language, language list (switcher order), contact details
+  skills.json            services carousel: translation key id, Font Awesome icon, image
   i18n/fr.json, nl.json  translations, one flat key -> text dictionary per language
   i18n/common.json       texts identical in every language
 _includes/layouts/
   base.njk               <head>, header, language switcher, footer
   home.njk, projects.njk page bodies, written once for all languages
+_includes/partials/
+  contact-link.njk       contactLink macro: email / phone link from site.contact
 fr/, nl/                 one stub per page, only picks its layout
 index.njk                root fallback redirecting / to /fr/
-eleventy.config.js       i18n plugin, `t` filter, `croppedPicture` shortcode, copied assets
+eleventy.config.js       i18n plugin, `t` filter, `picture` / `preloadPicture` shortcodes, copied assets
 css/, js/, img/          copied as-is, except img/src
-img/src/                 full-size project photos, processed at build time (not copied)
+img/src/                 full-size photos (projects, skills/), processed at build time (not copied)
 ```
 
 ## Translations
@@ -44,13 +47,23 @@ Internal links go through `locale_url` so they stay in the current language: `{{
 
 To add a page, create its layout in `_includes/layouts/` (chained to `layouts/base.njk`) and a stub per language in `fr/` and `nl/`.
 
-## Project images
+## Images
 
-`{% croppedPicture %}` (in `eleventy.config.js`, via [@11ty/eleventy-img](https://www.11ty.dev/docs/plugins/image/)) turns an original from `img/src/` into a `<picture>`:
-center-cropped to 16:9, at 400, 800 and 1200px wide, in webp with a jpeg fallback, written to `_site/img/projects/`.
+Every photo goes through `{% picture source, alt, options %}` (in `eleventy.config.js`, via [@11ty/eleventy-img](https://www.11ty.dev/docs/plugins/image/)), which renders a `<picture>` in webp with a jpeg fallback, written to `_site/img/<folder>/`.
+
+- `source`: a file in `img/src/`, or a remote URL (the Unsplash placeholders), downloaded at the first build and cached in `.cache/`
+- `options`: `folder` (output folder, required), `widths` (default `[400, 800, 1200]`), `ratio` (e.g. `[16, 9]`, center-crops the image), `sizes`, `class` (on `<picture>`), `lazy`, `priority` (`fetchpriority="high"`, for the hero)
+
+The ratio is part of the output file names, so changing a crop renders new files.
+`{% preloadPicture source, options %}` writes the `<link rel="preload">` of an above-the-fold picture; given the same options, it targets the same files (used for the hero, whose options are in the `hero` front matter of `home.njk`).
 
 To add a project, drop its `<name>-before.jpg` and `<name>-after.jpg` originals in `img/src/` and add an entry to `projects` in `_includes/layouts/projects.njk`.
-Outputs already present in `_site/img/projects/` are not re-encoded. Their file names change with the source file and the quality settings, but not with the crop: clear that folder after changing the crop.
+
+To add a service, add an entry to `_data/skills.json` (`image`: an Unsplash URL or a file in `img/src/skills/`) and its `skill.<id>` and `skill.<id>-alt` keys to every language file.
+
+## Contact details
+
+The email, phone and VAT number are in `site.contact` (`_data/site.json`); the header and the contact section render the links with the `contactLink` macro.
 
 ## Language switcher
 
