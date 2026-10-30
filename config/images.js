@@ -56,8 +56,8 @@ export default function (eleventyConfig) {
       formats: ["webp", "jpeg"],
       urlPath: `/img/${folder}/`,
       outputDir: path.join(eleventyConfig.directories.output, `img/${folder}/`),
-      sharpWebpOptions: { quality: 90, effort: 6 },
-      sharpJpegOptions: { quality: 90, mozjpeg: true },
+      sharpWebpOptions: { quality: 80, effort: 6 },
+      sharpJpegOptions: { quality: 80, mozjpeg: true },
       // The crop is not part of eleventy-img's file hash: the ratio in the name renders new files when it changes
       filenameFormat: (id, originalSource, width, format) => `${id}${ratioSuffix}-${width}.${format}`,
       transform: ratio

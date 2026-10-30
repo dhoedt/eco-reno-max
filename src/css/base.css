@@ -57,10 +57,14 @@
   --space-md: 1.5rem;
   --space-lg: 3rem;
   --header-height: 3rem;
+  --title-rule-width: 3rem;
   /* Shrink on short screens (landscape phones) but never collapse */
   --margin-title: clamp(var(--space-sm), 2vh, var(--space-md));
   --main-padding: clamp(var(--space-gutter), 3vh, 2rem);
   --section-padding: clamp(var(--space-gutter), 3vh, 2rem);
+  /* Breakpoints: 400px, 560px, 760px, and 1011px, where the wrapper reaches its 60rem cap (60rem / 95%).
+     Media queries can't read custom properties: the `sizes` attributes in layouts/home.njk and
+     layouts/projects.njk repeat these values and the slide/column widths; update them together */
   --wrapper-width: min(60rem, 95%);
 }
 
@@ -124,7 +128,7 @@ main h1:not(.hero h1)::after,
 h2::after {
   content: '';
   display: block;
-  width: 3rem;
+  width: var(--title-rule-width);
   height: 2px;
   background-color: var(--color-primary);
 }
@@ -185,9 +189,24 @@ header {
   box-shadow: var(--shadow-header);
 }
 
-header * {
-  align-items: center;
+header {
   color: var(--color-bg);
+}
+
+header a {
+  color: inherit;
+}
+
+/* Every flex row of the header centres its items vertically */
+header .wrapper,
+header #navbar-right-side,
+header nav,
+header nav a:not(.cta),
+header address,
+header address a,
+.lang-selector summary,
+.lang-selector li a {
+  align-items: center;
 }
 
 header .wrapper {
@@ -207,7 +226,7 @@ header .cta {
   border: 1px solid var(--color-bg);
   padding-block: var(--space-xs);
   padding-inline: var(--space-sm);
-  border-radius: var(--space-xs);
+  border-radius: var(--radius-sm);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -358,8 +377,6 @@ header address a>span {
   right: 0;
   display: flex;
   flex-direction: column;
-  /* Overrides header * centering: every option spans the full width, flags aligned */
-  align-items: stretch;
   gap: var(--space-xs);
   margin: 0;
   padding: var(--space-xs);

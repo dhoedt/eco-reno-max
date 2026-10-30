@@ -1,3 +1,8 @@
+:root {
+  --hero-height: clamp(20rem, 50vh, 25rem);
+  --house-max-width: 8rem;
+}
+
 /* Hero */
 /* The hero opens <main> flush under the header: main's top padding goes below it instead */
 main:has(> .hero) {
@@ -7,7 +12,7 @@ main:has(> .hero) {
 .hero {
   margin-bottom: var(--main-padding);
   position: relative;
-  height: clamp(20rem, 50vh, 25rem);
+  height: var(--hero-height);
   overflow: hidden;
   view-timeline: --hero block;
 }
@@ -27,6 +32,15 @@ main:has(> .hero) {
   animation: hero-parallax linear both;
   animation-timeline: --hero;
   animation-range: cover 0% exit 100%;
+}
+
+/* No scroll-linked motion: the image stays still and just fills the hero */
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg {
+    inset: 0;
+    will-change: auto;
+    animation: none;
+  }
 }
 
 .hero-bg img {
@@ -158,7 +172,7 @@ main:has(> .hero) {
 .house {
   display: block;
   width: 33%;
-  max-width: 8rem;
+  max-width: var(--house-max-width);
 }
 
 @media (min-width: 760px) {
@@ -172,7 +186,7 @@ main:has(> .hero) {
   fill: var(--color-text);
   cursor: pointer;
   transition: fill 0.2s ease;
-  animation: house-cycle-segment 20s ease-in-out infinite;
+  animation: house-cycle-segment 22s ease-in-out infinite;
 }
 
 /* Stacks the texts on top of each other; only the active one is visible */
@@ -189,7 +203,7 @@ main:has(> .hero) {
 .house-text {
   opacity: 0;
   transition: opacity 0.2s ease;
-  animation: house-cycle-text 20s ease-in-out infinite;
+  animation: house-cycle-text 22s ease-in-out infinite;
 }
 
 .house-text h3 {
@@ -203,11 +217,11 @@ main:has(> .hero) {
   max-width: 40ch;
 }
 
-/* Each segment and its text get the spotlight for 4s, from the roof down to the floor */
-:is(.house-segment, .house-text)[data-segment="2"] { animation-delay: 4s; }
-:is(.house-segment, .house-text)[data-segment="3"] { animation-delay: 8s; }
-:is(.house-segment, .house-text)[data-segment="4"] { animation-delay: 12s; }
-:is(.house-segment, .house-text)[data-segment="5"] { animation-delay: 16s; }
+/* Each segment and its text get the spotlight for 4.4s, from the roof down to the floor */
+:is(.house-segment, .house-text)[data-segment="2"] { animation-delay: 4.4s; }
+:is(.house-segment, .house-text)[data-segment="3"] { animation-delay: 8.8s; }
+:is(.house-segment, .house-text)[data-segment="4"] { animation-delay: 13.2s; }
+:is(.house-segment, .house-text)[data-segment="5"] { animation-delay: 17.6s; }
 
 @keyframes house-cycle-segment {
   0%, 20%, 100% { fill: var(--color-text); }
