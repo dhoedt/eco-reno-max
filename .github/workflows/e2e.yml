@@ -5,6 +5,14 @@ on:
     branches: [master]
   pull_request:
 
+permissions:
+  contents: read
+
+# A new push on the same branch cancels the run still in progress
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   e2e:
     runs-on: ubuntu-latest

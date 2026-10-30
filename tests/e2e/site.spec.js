@@ -25,8 +25,6 @@ const pages = site.languages.flatMap((language) =>
   pageTemplates.map((template) => ({ ...template, language: language.code, url: `/${language.code}${template.path}` })),
 );
 
-const localOrigin = "http://localhost:8080";
-
 // Every root-relative URL a page links to or loads: links, scripts, stylesheets, images and their srcset candidates
 async function collectLocalUrls(page) {
   const urls = await page.evaluate(() => {
@@ -40,7 +38,9 @@ async function collectLocalUrls(page) {
     });
     return found;
   });
-  return [...new Set(urls.filter((url) => url && url.startsWith("/") && !url.startsWith("//")))];
+  // Without the #fragment: the house.svg segments are one file
+  const localUrls = urls.filter((url) => url && url.startsWith("/") && !url.startsWith("//")).map((url) => url.split("#")[0]);
+  return [...new Set(localUrls)];
 }
 
 test("the root redirects to the default language", async ({ page }) => {
@@ -58,16 +58,19 @@ for (const { name, url, language } of pages) {
       await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /\S/);
     });
 
-    test("has no console errors and no failed local requests", async ({ page }) => {
+    // Only the site's own files: an outage of the font CDNs (Google Fonts, cdnjs) must not fail the test
+    test("has no console errors and no failed local requests", async ({ page, baseURL }) => {
       const problems = [];
       page.on("console", (message) => {
-        if (message.type() === "error") problems.push(`console: ${message.text()}`);
+        if (message.type() === "error" && message.location().url.startsWith(baseURL)) {
+          problems.push(`console: ${message.text()}`);
+        }
       });
       page.on("requestfailed", (request) => {
-        if (request.url().startsWith(localOrigin)) problems.push(`failed: ${request.url()}`);
+        if (request.url().startsWith(baseURL)) problems.push(`failed: ${request.url()}`);
       });
       page.on("response", (response) => {
-        if (response.url().startsWith(localOrigin) && response.status() >= 400) {
+        if (response.url().startsWith(baseURL) && response.status() >= 400) {
           problems.push(`${response.status()}: ${response.url()}`);
         }
       });
@@ -109,7 +112,7 @@ for (const { name, url, language } of pages) {
           .filter((image) => {
             const alt = image.getAttribute("alt");
             if (alt === null) return true;
-            const isDecorative = image.closest(".hero-bg") || image.getAttribute("src").startsWith("/img/flags/");
+            const isDecorative = image.closest(".hero-bg") || image.getAttribute("src")?.startsWith("/img/flags/");
             return alt.trim() === "" && !isDecorative;
           })
           .map((image) => image.currentSrc || image.getAttribute("src")),
