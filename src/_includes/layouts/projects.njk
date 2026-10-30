@@ -4,14 +4,14 @@ pageName: projects
 pageScript: comparison
 titleKey: meta.projects.title
 descriptionKey: meta.projects.description
-# image: base name of the src/img/originals/<image>-before|after.jpg originals; swapped: the "after" photo (and its label) sits on the left
+# image: base name of the src/img/originals/<image>-before|after.jpg originals; the "before" photo is always on the left
 projects:
-  - { number: 1, image: floor, swapped: false, lazy: false }
-  - { number: 2, image: stairs, swapped: true, lazy: false }
-  - { number: 3, image: bedroom-floor, swapped: true, lazy: false }
-  - { number: 4, image: kitchen, swapped: true, lazy: true }
-  - { number: 5, image: living-room-floor, swapped: true, lazy: true }
-  - { number: 6, image: kitchen-backsplash, swapped: true, lazy: true }
+  - { number: 1, image: floor, lazy: false }
+  - { number: 2, image: stairs, lazy: false }
+  - { number: 3, image: bedroom-floor, lazy: false }
+  - { number: 4, image: kitchen, lazy: true }
+  - { number: 5, image: living-room-floor, lazy: true }
+  - { number: 6, image: kitchen-backsplash, lazy: true }
 imageSizes: "(min-width: 1011px) 36rem, (min-width: 760px) 57vw, 95vw"
 ---
 <main>
@@ -19,7 +19,7 @@ imageSizes: "(min-width: 1011px) 36rem, (min-width: 760px) 57vw, 95vw"
       <div class="wrapper">
         <h1>{{ "projects.heading" | translate }}</h1>
         {%- for project in projects %}
-        {%- set states = ["after", "before"] if project.swapped else ["before", "after"] %}
+        {%- set states = ["before", "after"] %}
         <article class="project">
           <div class="comparison">
             {%- for slot in ["left", "right"] %}
@@ -29,7 +29,6 @@ imageSizes: "(min-width: 1011px) 36rem, (min-width: 760px) 57vw, 95vw"
             <div class="comparison-handle" aria-hidden="true">
               <div class="comparison-handle-btn">&#8592; &#8594;</div>
             </div>
-            {#- Each label follows its photo, whichever side it is on #}
             {%- for slot in ["left", "right"] %}
             <span class="comparison-label comparison-label--{{ slot }}">{{ ("projects.label-" ~ states[loop.index0]) | translate }}</span>
             {%- endfor %}
