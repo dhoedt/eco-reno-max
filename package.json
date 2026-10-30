@@ -9,6 +9,9 @@
     "start": "eleventy --serve",
     "test:e2e": "playwright test"
   },
+  "engines": {
+    "node": ">=22"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dhoedt/eco-reno-max.git"

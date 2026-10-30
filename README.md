@@ -1,6 +1,6 @@
 # EcoRéno Max website
 
-Static site built with [Eleventy](https://www.11ty.dev/) (v3, Node >= 18): every page is generated once per language, in `/fr/` (default) and `/nl/`.
+Static site built with [Eleventy](https://www.11ty.dev/) (v3, Node >= 22): every page is generated once per language, in `/fr/` (default) and `/nl/`.
 
 ## Build
 
@@ -10,7 +10,33 @@ npm start        # dev server with live reload on http://localhost:8080/
 npm run build    # writes the site to _site/
 ```
 
-Deploy the content of `_site/`.
+## Deploy
+
+Every push on `master` runs the e2e tests (`.github/workflows/e2e.yml`); when they pass, `.github/workflows/deploy.yml` connects to the server over SSH, which runs `scripts/deploy.sh`.
+It can also be started by hand from the Actions tab (*Deploy* → *Run workflow*).
+
+`scripts/deploy.sh` builds the latest `master` on the server and publishes it atomically.
+It stops at the first error, and a failed build leaves the live site untouched. Layout under `DEPLOY_ROOT` (default `/srv/ecoreno`):
+
+```
+repo/                   git checkout of master; keeps node_modules/ and .cache/ (remote images, downloaded once)
+releases/<date>-<sha>/  one built site per deploy, the 5 newest are kept
+current                 symlink to the live release: the web server's document root
+```
+
+Before building, it checks that `git`, `node`, `npm` and `flock` are installed, and `npm ci --engine-strict` refuses a Node version that doesn't match `engines` in `package.json`.
+The checkout is reset to `origin/master`: never edit files in `repo/` on the server. A change to `deploy.sh` applies from the next deploy.
+
+One-time server setup:
+
+1. clone the repository into `/srv/ecoreno/repo` (another location: set `DEPLOY_ROOT` in the forced command);
+2. restrict the CI key to the script in the deploy user's `~/.ssh/authorized_keys`:
+   `command="/srv/ecoreno/repo/scripts/deploy.sh",restrict ssh-ed25519 AAAA...`
+3. point the web server's document root at `/srv/ecoreno/current`, readable by the web server user (`releases/` included).
+
+GitHub secrets: `DEPLOY_SSH_KEY` (private key), `DEPLOY_KNOWN_HOSTS` (output of `ssh-keyscan -p <port> <host>`), `DEPLOY_USER`, `DEPLOY_HOST`, `DEPLOY_PORT` (optional, default 22).
+
+To roll back, point `current` at a previous release: `ln -sfn /srv/ecoreno/releases/<release> /srv/ecoreno/current`.
 
 ## Folder layout
 
@@ -28,6 +54,7 @@ _includes/partials/
 fr/, nl/                 one stub per page, only picks its layout
 index.njk                root fallback redirecting / to /fr/
 eleventy.config.js       i18n plugin, `t` filter, `picture` / `preloadPicture` shortcodes, copied assets
+scripts/deploy.sh        server-side build and atomic publish, run by the Deploy workflow
 css/, js/, img/          copied as-is, except img/src
 img/src/                 full-size photos (projects, skills/), processed at build time (not copied)
 ```
