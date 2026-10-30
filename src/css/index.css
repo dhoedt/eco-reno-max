@@ -75,6 +75,13 @@ main:has(> .hero) {
   text-shadow: 0 0.0625rem 0.25rem var(--color-overlay);
 }
 
+/* Keep the tagline off the screen edges once there is room to spare */
+@media (min-width: 760px) {
+  .hero-content p {
+    padding-inline: var(--space-lg);
+  }
+}
+
 .hero-content .cta {
   display: inline-block;
   padding: var(--space-sm) var(--space-md);
