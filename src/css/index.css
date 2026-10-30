@@ -227,10 +227,8 @@ body:has(.house-segment:hover) .house-segment:hover {
   fill: var(--color-primary) !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  body:has(.house-segment:hover) .house-text {
-    opacity: 0 !important;
-  }
+body:has(.house-segment:hover) .house-text {
+  opacity: 0 !important;
 }
 
 body:has(.house-segment[data-segment="1"]:hover) .house-text[data-segment="1"],
@@ -241,25 +239,16 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
   opacity: 1 !important;
 }
 
-/* No cycle to reveal the texts one by one: all of them are listed, one below the other */
+/* Same cycle, one text at a time, but each segment and text switches instantly instead of fading */
 @media (prefers-reduced-motion: reduce) {
   .house-segment,
   .house-text {
-    animation: none;
-  }
-
-  .house-texts {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .house-text {
-    opacity: 1;
+    animation-timing-function: step-end;
+    transition: none;
   }
 }
 
-/* Skills carousel (CSS-only): swipe / scroll-snap everywhere, arrows and dots where ::scroll-button / ::scroll-marker are supported */
+/* Skills carousel: swipe / scroll-snap everywhere, wrap-around arrows from js/carousel.js, dots where ::scroll-marker is supported */
 :root {
   /* Width of one slide, relative to the wrapper (cqi) so the track padding does not shrink it; neighbours peek in on both sides */
   --slide-width: 80cqi;
@@ -369,61 +358,52 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
   }
 }
 
-/* Arrows and dots: browsers without ::scroll-button keep a plain swipeable row with its scrollbar */
-@supports selector(::scroll-button(*)) {
+/* Previous / next arrows: real buttons revealed by js/carousel.js, which wraps around at both ends
+   (native ::scroll-button arrows can't: they are disabled on the first and last slides) */
+.carousel-button {
+  position: absolute;
+  position-anchor: --skills-carousel;
+  /* Vertically centred on the slides: the track centre, shifted by half the padding-block difference */
+  top: calc(anchor(center) - (var(--space-md) - var(--space-sm)) / 2 - var(--tap-target) / 2);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  border: none;
+  border-radius: 50%;
+  /* Dark translucent disc with a white chevron, in tune with the darkened photos */
+  background-color: var(--color-overlay);
+  color: var(--color-white);
+  font-size: var(--font-size-icon);
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Without JS the buttons would do nothing: they stay hidden */
+.carousel-button[hidden] {
+  display: none;
+}
+
+.carousel-button:hover,
+.carousel-button:focus-visible {
+  background-color: var(--color-primary);
+}
+
+.carousel-button--previous {
+  left: calc(anchor(left) + var(--space-sm));
+}
+
+.carousel-button--next {
+  right: calc(anchor(right) + var(--space-sm));
+}
+
+/* Dots: browsers without ::scroll-marker keep a plain swipeable row with its scrollbar */
+@supports selector(::scroll-marker) {
   .skills-carousel {
     scrollbar-width: none;
-  }
-
-  .skills-carousel::scroll-button(*) {
-    position: absolute;
-    position-anchor: --skills-carousel;
-    /* Vertically centred on the slides: the track centre, shifted by half the padding-block difference */
-    top: calc(anchor(center) - (var(--space-md) - var(--space-sm)) / 2 - var(--tap-target) / 2);
-    z-index: 2;
-    display: grid;
-    place-items: center;
-    width: var(--tap-target);
-    height: var(--tap-target);
-    border: none;
-    border-radius: 50%;
-    /* Dark translucent disc with a white chevron, in tune with the darkened photos */
-    background-color: var(--color-overlay);
-    color: var(--color-white);
-    font-size: var(--font-size-icon);
-    font-weight: 600;
-    line-height: 1;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
-  }
-
-  .skills-carousel::scroll-button(*):hover,
-  .skills-carousel::scroll-button(*):focus-visible {
-    background-color: var(--color-primary);
-  }
-
-  .skills-carousel::scroll-button(*):disabled {
-    opacity: 0;
-    cursor: default;
-  }
-
-  .skills-carousel::scroll-button(left) {
-    content: '‹' / 'Service précédent';
-    left: calc(anchor(left) + var(--space-sm));
-  }
-
-  .skills-carousel::scroll-button(right) {
-    content: '›' / 'Service suivant';
-    right: calc(anchor(right) + var(--space-sm));
-  }
-
-  /* CSS alt text is out of reach of the i18n dictionaries: follow the page's <html lang> */
-  .skills-carousel:lang(nl)::scroll-button(left) {
-    content: '‹' / 'Vorige dienst';
-  }
-
-  .skills-carousel:lang(nl)::scroll-button(right) {
-    content: '›' / 'Volgende dienst';
   }
 
   .skills-carousel::scroll-marker-group {

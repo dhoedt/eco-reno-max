@@ -67,7 +67,7 @@ skillImageSizes: "(min-width: 1011px) 20rem, (min-width: 760px) 31vw, (min-width
     <section id="skills" aria-labelledby="skills-heading">
       <div class="wrapper">
         <h2 id="skills-heading">{{ "services.heading" | translate }}</h2>
-        <!-- CSS-only carousel: swipe / scroll-snap everywhere, arrows and dots where ::scroll-button / ::scroll-marker are supported -->
+        <!-- Carousel: swipe / scroll-snap everywhere, wrap-around arrows from js/carousel.js, dots where ::scroll-marker is supported -->
         <ul class="skills-carousel" aria-label="{{ 'services.heading' | translate }}">
           {%- for skill in skills %}
           <li class="skill-slide">
@@ -76,6 +76,9 @@ skillImageSizes: "(min-width: 1011px) 20rem, (min-width: 760px) 31vw, (min-width
           </li>
           {%- endfor %}
         </ul>
+        <!-- Revealed and driven by js/carousel.js -->
+        <button type="button" class="carousel-button carousel-button--previous" aria-label="{{ 'services.previous' | translate }}" hidden>‹</button>
+        <button type="button" class="carousel-button carousel-button--next" aria-label="{{ 'services.next' | translate }}" hidden>›</button>
       </div>
     </section>
 
