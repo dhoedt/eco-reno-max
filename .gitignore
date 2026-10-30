@@ -1,4 +1,6 @@
-.playwright*
+.playwright-cli/
+test-results/
+playwright-report/
 .claude/settings.local.json
 sandbox/**
 node_modules/
