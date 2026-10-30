@@ -4,14 +4,16 @@ pageName: projects
 pageScript: comparison
 titleKey: meta.projects.title
 descriptionKey: meta.projects.description
-# image: base name of the src/img/originals/<image>-before|after.jpg originals; the "before" photo is always on the left
+# name: unique project id; base name of the src/img/originals/<name>-before|after.jpg originals
+# and of the project.<name>.* i18n keys; the "before" photo is always on the left
 projects:
-  - { number: 1, image: floor, lazy: false }
-  - { number: 2, image: stairs, lazy: false }
-  - { number: 3, image: bedroom-floor, lazy: false }
-  - { number: 4, image: kitchen, lazy: true }
-  - { number: 5, image: living-room-floor, lazy: true }
-  - { number: 6, image: kitchen-backsplash, lazy: true }
+  - { name: living-room-floor }
+  - { name: kitchen }
+  - { name: bedroom-floor }
+  - { name: kitchen-backsplash }
+  - { name: stairs }
+# number of projects at the top of the page whose images load eagerly; the following ones are lazy-loaded
+eagerProjects: 3
 imageSizes: "(min-width: 1011px) 36rem, (min-width: 760px) 57vw, 95vw"
 ---
 <main>
@@ -19,12 +21,15 @@ imageSizes: "(min-width: 1011px) 36rem, (min-width: 760px) 57vw, 95vw"
       <div class="wrapper">
         <h1>{{ "projects.heading" | translate }}</h1>
         {%- for project in projects %}
+        {%- set key = "project." ~ project.name ~ "." %}
+        {#- read before the inner loops shadow `loop` #}
+        {%- set lazy = loop.index > eagerProjects %}
         {%- set states = ["before", "after"] %}
         <article class="project">
           <div class="comparison">
             {%- for slot in ["left", "right"] %}
             {%- set state = states[loop.index0] %}
-            {% picture project.image ~ "-" ~ state ~ ".jpg", ("project" ~ project.number ~ "." ~ state) | translate, { folder: "projects", ratio: [16, 9], class: "comparison-" ~ slot, sizes: imageSizes, lazy: project.lazy } %}
+            {% picture project.name ~ "-" ~ state ~ ".jpg", (key ~ state) | translate, { folder: "projects", ratio: [16, 9], class: "comparison-" ~ slot, sizes: imageSizes, lazy: lazy } %}
             {%- endfor %}
             <div class="comparison-handle" aria-hidden="true">
               <div class="comparison-handle-btn">&#8592; &#8594;</div>
@@ -36,8 +41,8 @@ imageSizes: "(min-width: 1011px) 36rem, (min-width: 760px) 57vw, 95vw"
               aria-label="{{ 'projects.compare' | translate }}">
           </div>
           <div class="project-body">
-            <h2>{{ ("project" ~ project.number ~ ".title") | translate }}</h2>
-            <p>{{ ("project" ~ project.number ~ ".desc") | translate }}</p>
+            <h2>{{ (key ~ "title") | translate }}</h2>
+            <p>{{ (key ~ "desc") | translate }}</p>
           </div>
         </article>
         {%- endfor %}
