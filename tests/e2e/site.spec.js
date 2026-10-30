@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { test, expect } from "@playwright/test";
 
 function readData(file) {
-  return JSON.parse(readFileSync(new URL(`../../_data/${file}`, import.meta.url), "utf8"));
+  return JSON.parse(readFileSync(new URL(`../../src/_data/${file}`, import.meta.url), "utf8"));
 }
 
 const site = readData("site.json");

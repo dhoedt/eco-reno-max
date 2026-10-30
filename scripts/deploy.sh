@@ -54,7 +54,7 @@ main() {
   local release
   release="$releases/$(date +%Y%m%d-%H%M%S)-$commit"
   mkdir -p "$releases"
-  # Remote images are committed in img/src/remote/: the build never downloads them.
+  # Remote images are committed in src/img/originals/remote/: the build never downloads them.
   # A failed build removes its half-written release; the live site is untouched.
   trap 'rm -rf "$release"' ERR
   npm run build -- --output="$release"

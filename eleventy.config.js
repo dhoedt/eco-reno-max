@@ -3,8 +3,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { I18nPlugin } from "@11ty/eleventy";
 import * as solidIcons from "@fortawesome/free-solid-svg-icons";
-import images from "./_config/images.js";
-import site from "./_data/site.json" with { type: "json" };
+import images from "./config/images.js";
+import site from "./src/_data/site.json" with { type: "json" };
 
 export default function (eleventyConfig) {
   eleventyConfig.addPlugin(I18nPlugin, {
@@ -14,16 +14,16 @@ export default function (eleventyConfig) {
   // picture and preloadPicture shortcodes
   eleventyConfig.addPlugin(images);
 
-  // Looks a key up in _data/i18n/<page language>.json, then in _data/i18n/common.json for strings shared by all languages;
+  // Looks a key up in src/_data/i18n/<page language>.json, then in src/_data/i18n/common.json for strings shared by all languages;
   // a missing key fails the build instead of shipping an untranslated page
   eleventyConfig.addFilter("translate", function (key) {
     const language = this.page.lang;
     const dictionary = this.ctx.i18n[language];
     const commonDictionary = this.ctx.i18n.common;
-    if (!dictionary) throw new Error(`No dictionary _data/i18n/${language}.json`);
+    if (!dictionary) throw new Error(`No dictionary src/_data/i18n/${language}.json`);
     if (key in dictionary) return dictionary[key];
     if (key in commonDictionary) return commonDictionary[key];
-    throw new Error(`Missing translation key "${key}" in _data/i18n/${language}.json and _data/i18n/common.json`);
+    throw new Error(`Missing translation key "${key}" in src/_data/i18n/${language}.json and src/_data/i18n/common.json`);
   });
 
   // Cache busting for passthrough-copied assets: appends a hash of the file's content, so its URL only changes with it
@@ -46,22 +46,20 @@ export default function (eleventyConfig) {
     return `<svg class="icon" viewBox="0 0 ${width} ${height}" aria-hidden="true" focusable="false"><path d="${pathData}"/></svg>`;
   });
 
-  eleventyConfig.addPassthroughCopy("css");
-  eleventyConfig.addPassthroughCopy("js");
-  // img/src holds the full-size originals, processed by the picture shortcode instead of being copied
-  eleventyConfig.addPassthroughCopy("img/*.svg");
-  eleventyConfig.addPassthroughCopy("img/flags/**");
-  // Self-hosted variable fonts (latin subset), declared in css/base.css: no request to Google Fonts
+  eleventyConfig.addPassthroughCopy("src/css");
+  eleventyConfig.addPassthroughCopy("src/js");
+  // src/img/originals holds the full-size originals, processed by the picture shortcode instead of being copied
+  eleventyConfig.addPassthroughCopy("src/img/*.svg");
+  eleventyConfig.addPassthroughCopy("src/img/flags/**");
+  // Self-hosted variable fonts (latin subset), declared in src/css/base.css: no request to Google Fonts
   eleventyConfig.addPassthroughCopy({
     "node_modules/@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2": "fonts/fraunces-latin-opsz-normal.woff2",
     "node_modules/@fontsource-variable/urbanist/files/urbanist-latin-wght-normal.woff2": "fonts/urbanist-latin-wght-normal.woff2",
   });
-
-  eleventyConfig.ignores.add(".playwright-cli/**");
-  eleventyConfig.ignores.add(".claude/**");
-  eleventyConfig.ignores.add("sandbox/**");
 }
 
 export const config = {
+  // Only the site's sources: tooling, tests and build code stay outside src/, so nothing else needs ignoring
+  dir: { input: "src" },
   templateFormats: ["njk"],
 };

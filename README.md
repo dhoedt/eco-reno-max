@@ -41,25 +41,32 @@ To roll back, point `current` at a previous release: `ln -sfn /var/www/ecorenoma
 
 ## Folder layout
 
+`src/` is Eleventy's input folder: it only holds what makes up the site. Tooling, tests and build code stay outside it.
+
 ```
-_data/
-  site.json              site url, default language, language list (switcher order), contact details
-  skills.json            services carousel: translation key id, icon name, image
-  i18n/fr.json, nl.json  translations, one flat key -> text dictionary per language
-  i18n/common.json       texts identical in every language
-_includes/layouts/
-  base.njk               <head>, header, language switcher, footer
-  home.njk, projects.njk page bodies, written once for all languages
-_includes/partials/
-  contact-link.njk       contactLink macro: email / phone link from site.contact
-fr/, nl/                 one stub per page, only picks its layout
-index.njk                root fallback redirecting / to /fr/
-eleventy.config.js       i18n plugin, `translate` and `asset_url` filters, `icon` shortcode, copied assets (fonts included)
-_config/images.js        image pipeline: `picture` / `preloadPicture` shortcodes, download of remote images
-scripts/deploy.sh        server-side build and atomic publish, run by the Deploy workflow
-css/, js/, img/          copied as-is, except img/src
-img/src/                 full-size photos (projects, skills/), processed at build time (not copied)
-img/src/remote/          local copies of the remote (Unsplash) images, committed
+src/
+  _data/
+    site.json              site url, default language, language list (switcher order), contact details
+    skills.json            services carousel: translation key id, icon name, image
+    i18n/fr.json, nl.json  translations, one flat key -> text dictionary per language
+    i18n/common.json       texts identical in every language
+  _includes/layouts/
+    base.njk               <head>, header, language switcher, footer
+    home.njk, projects.njk page bodies, written once for all languages
+  _includes/partials/
+    contact-link.njk       contactLink macro: email / phone link from site.contact
+  pages/
+    fr/, nl/               one stub per page, only picks its layout
+    index.njk              root fallback redirecting / to /fr/
+    pages.11tydata.js      permalinks without the pages/ folder: pages/fr/projects.njk -> /fr/projects/
+  css/, js/, img/          copied as-is, except img/originals
+  img/originals/           full-size photos (projects, skills/), processed at build time (not copied)
+  img/originals/remote/    local copies of the remote (Unsplash) images, committed
+eleventy.config.js         i18n plugin, `translate` and `asset_url` filters, `icon` shortcode, copied assets (fonts included)
+config/images.js           image pipeline: `picture` / `preloadPicture` shortcodes, download of remote images
+tests/e2e/                 Playwright end-to-end tests (playwright.config.js), run by the e2e workflow
+scripts/deploy.sh          server-side build and atomic publish, run by the Deploy workflow
+scripts/screenshots.js     full-page screenshots of every page on common devices, written to screenshots/ (not committed)
 ```
 
 ## Translations
@@ -70,26 +77,26 @@ A key missing from both fails the build.
 
 To add a text:
 
-1. add the key to `_data/i18n/fr.json` and `_data/i18n/nl.json`, or once to `common.json` if it doesn't change between languages;
+1. add the key to `src/_data/i18n/fr.json` and `src/_data/i18n/nl.json`, or once to `common.json` if it doesn't change between languages;
 2. use it in the layout: `{{ "section.key" | translate }}`, including for `alt` and `aria-label` attributes.
 
 Internal links go through `locale_url` so they stay in the current language: `{{ '/fr/projects/' | locale_url }}`.
 
-To add a page, create its layout in `_includes/layouts/` (chained to `layouts/base.njk`) and a stub per language in `fr/` and `nl/`.
+To add a page, create its layout in `src/_includes/layouts/` (chained to `layouts/base.njk`) and a stub per language in `src/pages/fr/` and `src/pages/nl/`.
 
 ## Images
 
-Every photo goes through `{% picture source, alt, options %}` (in `_config/images.js`, via [@11ty/eleventy-img](https://www.11ty.dev/docs/plugins/image/)), which renders a `<picture>` in webp with a jpeg fallback, written to `_site/img/<folder>/`.
+Every photo goes through `{% picture source, alt, options %}` (in `config/images.js`, via [@11ty/eleventy-img](https://www.11ty.dev/docs/plugins/image/)), which renders a `<picture>` in webp with a jpeg fallback, written to `_site/img/<folder>/`.
 
-- `source`: a file in `img/src/`, or a remote URL (the Unsplash placeholders). A remote image is downloaded into `img/src/remote/` the first time a build needs it, and never again once the file is there: commit it, so the server's builds never contact the remote site
+- `source`: a file in `src/img/originals/`, or a remote URL (the Unsplash placeholders). A remote image is downloaded into `src/img/originals/remote/` the first time a build needs it, and never again once the file is there: commit it, so the server's builds never contact the remote site
 - `options`: `folder` (output folder, required), `widths` (default `[400, 800, 1200]`), `ratio` (e.g. `[16, 9]`, center-crops the image), `sizes`, `class` (on `<picture>`), `lazy`, `priority` (`fetchpriority="high"`, for the hero)
 
 The ratio is part of the output file names, so changing a crop renders new files.
 `{% preloadPicture source, options %}` writes the `<link rel="preload">` of an above-the-fold picture; given the same options, it targets the same files (used for the hero, whose options are in the `hero` front matter of `home.njk`).
 
-To add a project, drop its `<name>-before.jpg` and `<name>-after.jpg` originals in `img/src/` and add an entry to `projects` in `_includes/layouts/projects.njk`.
+To add a project, drop its `<name>-before.jpg` and `<name>-after.jpg` originals in `src/img/originals/` and add an entry to `projects` in `src/_includes/layouts/projects.njk`.
 
-To add a service, add an entry to `_data/skills.json` (`image`: an Unsplash URL or a file in `img/src/skills/`; `icon`: see below) and its `skill.<id>` and `skill.<id>-alt` keys to every language file.
+To add a service, add an entry to `src/_data/skills.json` (`image`: an Unsplash URL or a file in `src/img/originals/skills/`; `icon`: see below) and its `skill.<id>` and `skill.<id>-alt` keys to every language file.
 
 ## Icons and fonts
 
@@ -100,11 +107,11 @@ Nothing is loaded from a third-party site.
 
 ## Contact details
 
-The email, phone and VAT number are in `site.contact` (`_data/site.json`); the header and the contact section render the links with the `contactLink` macro.
+The email, phone and VAT number are in `site.contact` (`src/_data/site.json`); the header and the contact section render the links with the `contactLink` macro.
 
 ## Language switcher
 
-Flags are `img/flags/<language code>.svg`; replace the files to change their design.
+Flags are `src/img/flags/<language code>.svg`; replace the files to change their design.
 
 ## Cache busting
 

@@ -29,13 +29,6 @@ jobs:
 
       - run: npx playwright install --with-deps chromium
 
-      # Remote images (Unsplash placeholders) downloaded by eleventy-img, kept between runs
-      - uses: actions/cache@v4
-        with:
-          path: .cache
-          key: eleventy-fetch-${{ hashFiles('_data/skills.json', '_includes/layouts/*.njk') }}
-          restore-keys: eleventy-fetch-
-
       - run: npm run test:e2e
 
       - uses: actions/upload-artifact@v4

@@ -1,13 +1,14 @@
-// Image pipeline: picture and preloadPicture shortcodes, resizing the originals of img/src with eleventy-img
+// Image pipeline: picture and preloadPicture shortcodes, resizing the originals of src/img/originals with eleventy-img
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import Image from "@11ty/eleventy-img";
 
-// Remote images (Unsplash placeholders) are downloaded into img/src/remote/ the first time they are used, and committed:
+// Remote images (Unsplash placeholders) are downloaded into src/img/originals/remote/ the first time they are used, and committed:
 // a file already there is never downloaded again, so builds (and the server) don't depend on the remote site.
 // Memoized per URL: the pages of every language and the hero preload ask for the same image at the same time.
-const REMOTE_IMAGE_FOLDER = "img/src/remote";
+const ORIGINALS_FOLDER = "src/img/originals";
+const REMOTE_IMAGE_FOLDER = `${ORIGINALS_FOLDER}/remote`;
 const IMAGE_EXTENSIONS = { "image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/avif": ".avif" };
 const remoteDownloads = new Map();
 
@@ -32,9 +33,9 @@ async function downloadRemoteImage(url) {
   return localFile;
 }
 
-// Path of the original to process: a file in img/src, or the local copy of a remote URL
+// Path of the original to process: a file in src/img/originals, or the local copy of a remote URL
 function localImageFile(source) {
-  if (!/^https?:\/\//.test(source)) return `img/src/${source}`;
+  if (!/^https?:\/\//.test(source)) return `${ORIGINALS_FOLDER}/${source}`;
   if (!remoteDownloads.has(source)) {
     const download = downloadRemoteImage(source);
     // A failed download is retried on the next rebuild of `npm start` instead of staying memoized
@@ -45,7 +46,7 @@ function localImageFile(source) {
 }
 
 export default function (eleventyConfig) {
-  // Resizes an image to every width, in webp + jpeg. source: a file in img/src, or a remote URL (Unsplash placeholders),
+  // Resizes an image to every width, in webp + jpeg. source: a file in src/img/originals, or a remote URL (Unsplash placeholders),
   // stored locally first by localImageFile. options.ratio ([width, height]) center-crops it; outputs go to img/<options.folder>/
   async function processImage(source, { folder, widths = [400, 800, 1200], ratio }) {
     const croppedHeight = (width) => Math.round((width * ratio[1]) / ratio[0]);
