@@ -10,26 +10,17 @@
   let isVisible = false;
   let lastInteraction = 0;
 
-  function centerOffset(element) {
-    const rect = element.getBoundingClientRect();
-    return rect.left + rect.width / 2;
-  }
-
-  function currentIndex() {
-    const trackCenter = centerOffset(track);
-    let closestIndex = 0;
-    slides.forEach(function (slide, index) {
-      if (Math.abs(centerOffset(slide) - trackCenter) < Math.abs(centerOffset(slides[closestIndex]) - trackCenter)) {
-        closestIndex = index;
-      }
-    });
-    return closestIndex;
-  }
-
+  // Advances by one slide whatever the snap alignment (centred on phones, start-aligned on wider screens),
+  // and wraps back to the first one once the end is reached
   function showNextSlide() {
-    const nextSlide = slides[(currentIndex() + 1) % slides.length];
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    if (track.scrollLeft >= maxScroll - 1) {
+      track.scrollTo({ left: 0 });
+      return;
+    }
+    const slideStep = Math.abs(slides[1].getBoundingClientRect().left - slides[0].getBoundingClientRect().left);
     // scrollBy rather than scrollIntoView: never scrolls the page itself
-    track.scrollBy({ left: centerOffset(nextSlide) - centerOffset(track) });
+    track.scrollBy({ left: slideStep });
   }
 
   // Paused while off-screen, in a background tab, hovered, focused, or shortly after the user moved it

@@ -358,6 +358,17 @@ body:has(.house-segment[data-segment="5"]:hover) .house-text[data-segment="5"] {
   transform: scale(1.05);
 }
 
+/* Several slides fit side by side: start-aligned so the carousel opens on a full row of the first skills */
+@media (min-width: 560px) {
+  .skills-carousel {
+    padding-inline: 0;
+  }
+
+  .skill-slide {
+    scroll-snap-align: start;
+  }
+}
+
 /* Arrows and dots: browsers without ::scroll-button keep a plain swipeable row with its scrollbar */
 @supports selector(::scroll-button(*)) {
   .skills-carousel {
