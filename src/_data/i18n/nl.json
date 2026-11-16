@@ -72,5 +72,9 @@
   "project.kitchen-backsplash.title": "Spatwand in de keuken",
   "project.kitchen-backsplash.desc": "Plaatsing van een spatwand in witte afgeschuinde metrotegels en verplaatsing van de stopcontacten.",
   "project.kitchen-backsplash.before": "Keuken met geschilderde muur boven het werkblad",
-  "project.kitchen-backsplash.after": "Keuken met spatwand in witte metrotegels"
+  "project.kitchen-backsplash.after": "Keuken met spatwand in witte metrotegels",
+  "project.stairwell-painting.title": "Schilderwerk in de traphal",
+  "project.stairwell-painting.desc": "Bekleding van een houten trap en schilderen van de muren in saliegroen en het plafond in wit.",
+  "project.stairwell-painting.before": "Traphal met verweerde witte muren",
+  "project.stairwell-painting.after": "Traphal met saliegroene muren en wit plafond"
 }

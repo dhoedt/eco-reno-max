@@ -72,5 +72,9 @@
   "project.kitchen-backsplash.title": "Crédence de cuisine",
   "project.kitchen-backsplash.desc": "Pose d'une crédence en carrelage métro blanc biseauté et déplacement des prises électriques.",
   "project.kitchen-backsplash.before": "Cuisine avec mur peint au-dessus du plan de travail",
-  "project.kitchen-backsplash.after": "Cuisine avec crédence en carrelage métro blanc"
+  "project.kitchen-backsplash.after": "Cuisine avec crédence en carrelage métro blanc",
+  "project.stairwell-painting.title": "Peinture de cage d'escalier",
+  "project.stairwell-painting.desc": "Habillage d'un escalier en bois et peinture des murs en vert sauge et du plafond en blanc.",
+  "project.stairwell-painting.before": "Cage d'escalier aux murs blancs défraîchis",
+  "project.stairwell-painting.after": "Cage d'escalier aux murs vert sauge et plafond blanc"
 }
