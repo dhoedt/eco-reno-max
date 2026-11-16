@@ -22,7 +22,15 @@ skillImageSizes: "(min-width: 1011px) 20rem, (min-width: 760px) 31vw, (min-width
       <div class="hero-content">
         <h1><img src="{{ '/img/logo.svg' | asset_url }}" width="1411" height="216" alt="{{ 'hero.logo-alt' | translate }}"></h1>
         <p>{{ "hero.tagline" | translate }}</p>
-        <a href="{{ '/fr/projects/' | locale_url }}" class="cta">{{ "hero.cta" | translate }}</a>
+        <div class="hero-actions">
+          <a href="{{ '/fr/projects/' | locale_url }}" class="cta">{{ "hero.cta" | translate }}</a>
+          <!-- JS-free choice menu: the popover attribute opens it and closes it on outside click or Escape -->
+          <button type="button" class="cta hero-contact-button" popovertarget="hero-contact-choice">{{ "hero.contact" | translate }}</button>
+          <ul id="hero-contact-choice" class="hero-contact-choice" popover aria-label="{{ 'hero.contact-choice' | translate }}">
+            <li>{{ contactLink(site.contact.phone, true, true) }}</li>
+            <li>{{ contactLink(site.contact.email, true, true) }}</li>
+          </ul>
+        </div>
       </div>
     </section>
 

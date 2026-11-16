@@ -96,8 +96,20 @@ main:has(> .hero) {
   }
 }
 
+/* Side by side when they fit, stacked and centred otherwise */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
 .hero-content .cta {
   display: inline-block;
+  /* <button> does not inherit the page font by default */
+  font-family: inherit;
+  line-height: inherit;
+  cursor: pointer;
   padding: var(--space-sm) var(--space-md);
   background-color: var(--color-primary);
   color: var(--color-bg);
@@ -112,9 +124,67 @@ main:has(> .hero) {
 }
 
 .hero-content .cta:hover,
-.hero-content .cta:focus-visible {
+.hero-content .cta:focus-visible,
+.hero-actions:has(.hero-contact-choice:popover-open) .hero-contact-button {
   background-color: var(--color-bg);
   color: var(--color-primary);
+}
+
+/* Contact choice: lives in the top layer, so the hero's overflow never clips it.
+   Without anchor positioning it stays centred in the viewport (default popover placement) */
+.hero-contact-button {
+  anchor-name: --hero-contact;
+}
+
+.hero-contact-choice {
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-xs);
+  list-style: none;
+  color: var(--color-bg);
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-raised);
+}
+
+.hero-contact-choice:popover-open {
+  display: flex;
+}
+
+@supports (position-area: bottom) {
+  .hero-contact-choice {
+    position-anchor: --hero-contact;
+    position-area: bottom;
+    position-try-fallbacks: flip-block;
+    inset: auto;
+    margin: var(--space-xs) 0;
+  }
+}
+
+.hero-contact-choice a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-height: var(--tap-target);
+  padding-inline: var(--space-sm);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: inherit;
+  white-space: nowrap;
+}
+
+/* Background instead of the default link underline */
+.hero-contact-choice a:hover,
+.hero-contact-choice a:focus-visible {
+  border-color: transparent;
+  background-color: var(--color-hover-light);
+}
+
+/* The number or address, quieter than the action */
+.hero-contact-choice a span + span {
+  font-size: var(--font-size-small);
+  opacity: 0.8;
 }
 
 #about p,
