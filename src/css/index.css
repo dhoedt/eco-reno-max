@@ -1,6 +1,8 @@
 :root {
   --hero-height: clamp(20rem, 50vh, 25rem);
   --house-max-width: 8rem;
+  /* How long each house segment and its text stay in the spotlight */
+  --house-step: 6s;
 }
 
 /* Hero */
@@ -228,7 +230,7 @@ main:has(> .hero) {
   fill: var(--color-text);
   cursor: pointer;
   transition: fill 0.2s ease;
-  animation: house-cycle-segment 22s ease-in-out infinite;
+  animation: house-cycle-segment ease-in-out infinite;
 }
 
 /* Stacks the texts on top of each other; only the active one is visible */
@@ -245,7 +247,7 @@ main:has(> .hero) {
 .house-text {
   opacity: 0;
   transition: opacity 0.2s ease;
-  animation: house-cycle-text 22s ease-in-out infinite;
+  animation: house-cycle-text ease-in-out infinite;
 }
 
 .house-text h3 {
@@ -259,11 +261,19 @@ main:has(> .hero) {
   max-width: 40ch;
 }
 
-/* Each segment and its text get the spotlight for 4.4s, from the roof down to the floor */
-:is(.house-segment, .house-text)[data-segment="2"] { animation-delay: 4.4s; }
-:is(.house-segment, .house-text)[data-segment="3"] { animation-delay: 8.8s; }
-:is(.house-segment, .house-text)[data-segment="4"] { animation-delay: 13.2s; }
-:is(.house-segment, .house-text)[data-segment="5"] { animation-delay: 17.6s; }
+/* Each segment and its text get the spotlight for one --house-step, from the roof down to the floor.
+   5 segments: the cycle lasts 5 steps, and each one is lit for 20% of it (see the keyframes).
+   Adding a segment means changing the 5 here and the percentages below */
+.house-segment,
+.house-text {
+  animation-duration: calc(5 * var(--house-step));
+  animation-delay: calc(var(--segment-order, 0) * var(--house-step));
+}
+
+:is(.house-segment, .house-text)[data-segment="2"] { --segment-order: 1; }
+:is(.house-segment, .house-text)[data-segment="3"] { --segment-order: 2; }
+:is(.house-segment, .house-text)[data-segment="4"] { --segment-order: 3; }
+:is(.house-segment, .house-text)[data-segment="5"] { --segment-order: 4; }
 
 @keyframes house-cycle-segment {
   0%, 20%, 100% { fill: var(--color-text); }
