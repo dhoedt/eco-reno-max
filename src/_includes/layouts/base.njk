@@ -39,18 +39,18 @@
           {{ contactLink(site.contact.email, false) }}
           {{ contactLink(site.contact.phone) }}
         </address>
-        <!-- JS-free dropdown: <details> opens and closes the list natively -->
-        <details class="lang-selector">
+        <!-- JS-free dropdown: the popover attribute opens the list and closes it on an outside click or Escape -->
+        <div class="lang-selector">
           {%- for language in site.languages %}
           {%- if language.code == page.lang %}
-          <summary aria-label="{{ language.code | upper }} – {{ 'nav.language' | translate }}">
+          <button type="button" popovertarget="lang-menu" aria-label="{{ language.code | upper }} – {{ 'nav.language' | translate }}">
             <img src="{{ ('/img/flags/' + language.code + '.svg') | asset_url }}" width="24" height="16" alt="">
             <span>{{ language.code | upper }}</span>
             {% icon "fa-chevron-down" %}
-          </summary>
+          </button>
           {%- endif %}
           {%- endfor %}
-          <ul aria-label="{{ 'nav.language' | translate }}">
+          <ul id="lang-menu" popover aria-label="{{ 'nav.language' | translate }}">
             {%- for language in site.languages %}
             <li>
               <a href="{{ page.url | locale_url(language.code) }}" hreflang="{{ language.code }}" lang="{{ language.code }}"
@@ -61,7 +61,7 @@
             </li>
             {%- endfor %}
           </ul>
-        </details>
+        </div>
       </div>
     </div>
   </header>

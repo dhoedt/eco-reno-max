@@ -126,7 +126,7 @@ for (const { name, url, language } of pages) {
 function navigationTests() {
   test("the language switcher keeps the current page", async ({ page }) => {
     await page.goto("/fr/projects/");
-    await page.locator(".lang-selector summary").click();
+    await page.locator(".lang-selector button").click();
     await page.locator('.lang-selector a[hreflang="nl"]').click();
     await expect(page).toHaveURL("/nl/projects/");
     await expect(page.locator('.lang-selector a[hreflang="nl"]')).toHaveAttribute("aria-current", "page");

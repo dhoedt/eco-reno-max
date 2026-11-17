@@ -206,7 +206,7 @@ header nav,
 header nav a:not(.cta),
 header address,
 header address a,
-.lang-selector summary,
+.lang-selector button,
 .lang-selector li a {
   align-items: center;
 }
@@ -240,12 +240,12 @@ header .cta:focus-visible {
 
 /* Enlarge the touch area of bordered header controls without changing their look */
 header .cta,
-.lang-selector summary {
+.lang-selector button {
   position: relative;
 }
 
 header .cta::after,
-.lang-selector summary::after {
+.lang-selector button::after {
   content: '';
   position: absolute;
   inset-block: calc((100% - var(--tap-target)) / 2);
@@ -308,59 +308,53 @@ header address a>span {
 }
 
 /* Language Selector */
-.lang-selector {
-  position: relative;
-}
-
-.lang-selector summary {
+.lang-selector button {
+  anchor-name: --lang-selector;
   display: flex;
   gap: var(--space-sm);
   padding-block: var(--space-xs);
   padding-inline: var(--space-sm);
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius-md);
-  list-style: none;
   cursor: pointer;
   white-space: nowrap;
   transition: background-color 0.2s ease;
 }
 
-.lang-selector summary::-webkit-details-marker {
-  display: none;
-}
-
 /* Focus ring for keyboard navigation only, not after a mouse click */
-.lang-selector summary:focus {
+.lang-selector button:focus {
   outline: none;
 }
 
-.lang-selector summary:focus-visible {
+.lang-selector button:focus-visible {
   outline: 2px solid var(--color-bg);
   outline-offset: 2px;
 }
 
-.lang-selector summary:hover,
-.lang-selector[open] summary {
+.lang-selector button:hover,
+.lang-selector:has(:popover-open) button {
   background-color: var(--color-overlay-light);
 }
 
 /* Flag and chevron only on the smallest phones, the language code once the header has room for it */
-.lang-selector summary span {
+.lang-selector button span {
   display: none;
 }
 
 @media (min-width: 400px) {
-  .lang-selector summary span {
+  .lang-selector button span {
     display: inline;
   }
 }
 
-.lang-selector summary .icon {
+.lang-selector button .icon {
   font-size: var(--font-size-xs);
-  transition: rotate 0.2s ease;
 }
 
-.lang-selector[open] summary .icon {
+.lang-selector:has(:popover-open) button .icon {
   rotate: 180deg;
 }
 
@@ -373,20 +367,36 @@ header address a>span {
   box-shadow: 0 0 0 1px var(--color-overlay-light);
 }
 
+/* The popover sits in the top layer: placed under the button, right edges aligned.
+   It resets the browser's centred-dialog defaults (inset, margin, colours) */
 .lang-selector ul {
-  position: absolute;
-  top: calc(100% + var(--space-xs));
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  margin: 0;
+  position-anchor: --lang-selector;
+  position-area: bottom span-left;
+  inset: auto;
+  margin: var(--space-xs) 0 0;
   padding: var(--space-xs);
   list-style: none;
+  color: inherit;
   background-color: var(--color-primary);
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-raised);
+}
+
+/* Only when open: a display value on the closed popover would override the browser's hiding */
+.lang-selector ul:popover-open {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+/* Browsers without anchor positioning: the header is fixed, so pin the list under its right edge */
+@supports not (anchor-name: --lang-selector) {
+  .lang-selector ul {
+    position: fixed;
+    top: var(--header-height);
+    right: calc((100% - var(--wrapper-width)) / 2);
+  }
 }
 
 .lang-selector li a {
