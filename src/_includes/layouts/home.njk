@@ -24,12 +24,12 @@ skillImageSizes: "(min-width: 1011px) 20rem, (min-width: 760px) 31vw, (min-width
         <p>{{ "hero.tagline" | translate }}</p>
         <div class="hero-actions">
           <a href="{{ '/fr/projects/' | locale_url }}" class="cta">{{ "hero.cta" | translate }}</a>
-          <!-- JS-free choice menu: the popover attribute opens it and closes it on outside click or Escape -->
-          <button type="button" class="cta hero-contact-button" popovertarget="hero-contact-choice">{{ "hero.contact" | translate }}</button>
-          <ul id="hero-contact-choice" class="hero-contact-choice" popover aria-label="{{ 'hero.contact-choice' | translate }}">
-            <li>{{ contactLink(site.contact.phone, true, true) }}</li>
-            <li>{{ contactLink(site.contact.email, true, true) }}</li>
-          </ul>
+          <!-- Contact details in plain text: readable, copyable and one tap away, no menu to open -->
+          <p class="hero-contact-line">
+            {{ contactLink(site.contact.phone) }}
+            <span aria-hidden="true">·</span>
+            {{ contactLink(site.contact.email) }}
+          </p>
         </div>
       </div>
     </section>
